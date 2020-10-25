@@ -1,0 +1,11 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js debug"
+  },
+  "author": "David Penkowoj",
+  "license": "BSD-2-Clause"
+}

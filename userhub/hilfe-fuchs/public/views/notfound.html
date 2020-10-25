@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+
+<html lang="de">
+
+<head>
+    <title>Fehler</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="David Penkowoj">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles/notfound.css">
+    <link rel="shortcut icon" href="fuchs.png" type="image/x-icon">
+</head>
+
+<body>
+    <noscript>Ihr Browser unterstützt einige Features dieser Seite nicht!</noscript>
+    <div>
+        <h1>404 - Seite nicht gefunden</h1>
+        <p>Die angegebene addresse konnte nicht gefunden werden.</p>
+        <button id="btn">Startseite</button>
+    </div>
+    <script type="text/javascript">
+        document.getElementById("btn").addEventListener("click", () => {
+            location.assign("/");
+        });
+    </script>
+</body>
+
+</html>
