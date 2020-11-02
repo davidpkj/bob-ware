@@ -1,5 +1,5 @@
 {
-  "name": "adminpub",
+  "name": "userhub",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -17,9 +17,7 @@
   },
   "homepage": "https://github.com/davidpkj/bob-ware#readme",
   "dependencies": {
-    "colors": "^1.4.0",
     "express": "^4.17.1",
-    "ip": "^1.1.5",
     "socket.io": "^2.3.0"
   }
 }
