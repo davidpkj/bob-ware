@@ -24,8 +24,8 @@ router.get("/", (_, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-router.post("/upload", multer({storage: diskStorage}).single("file"), (req, res) => {
-  // TODO: scketo.io emit "uploaded" after upload
+router.post("/upload", multer({storage: diskStorage}).single("file"), (_, res) => {
+  res.sendStatus(200);
 });
 
 module.exports = router;
