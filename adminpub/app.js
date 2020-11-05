@@ -9,9 +9,11 @@ const port = 1337;
 const router = require("./router");
 
 app.use(express.static(__dirname + "/dashboard/frontend/public"));
+app.use(express.static(__dirname + "/cloud/frontend/public"));
 app.use(express.static(__dirname + "/poker/frontend/public"));
 app.use("/", router);
 
-const poker = require("./poker/backend/main")(io);
+const pokerio = require("./poker/backend/main")(io);
+const cloudio = require("./cloud/backend/main")(io);
 
 http.listen(port, console.log(colors.green(`Adminpub ist in Betrieb unter http://${ip.address()}:${port}/`)));
