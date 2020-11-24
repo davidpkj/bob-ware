@@ -1,18 +1,17 @@
 const discord = require("discord.js");
 const client = new discord.Client();
 
+const token = require("./token");
 const prefix = "$";
-const token = "NzgwMTEzNzE3OTExMDkzMjk5.X7qXhA.yJvW_gE7RpyzU8nOAHuJEa7IKB8";
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on("message", (msg) => {
-  console.log(msg.member.roles.cache.some((role) => role.name == "hecka"));
-
   if (!msg.content.startsWith(prefix)) return;
   if (msg.author.bot) return;
+  if (!msg.member.roles.cache.some((role) => role.name == "hecka")) return;
 
   let message = msg.content.toLowerCase().substring(1, msg.content.length);
 
