@@ -9,20 +9,26 @@ client.on("ready", () => {
 });
 
 client.on("message", (msg) => {
-  if (!msg.content.startsWith(prefix)) return;
   if (msg.author.bot) return;
+  if (!msg.content.startsWith(prefix)) return;
   if (!msg.member.roles.cache.some((role) => role.name == "hecka")) return;
 
   let message = msg.content.toLowerCase().substring(1, msg.content.length);
 
-  switch (message) {
-    case "shot":
-      msg.reply("kommt sofort");
-      break;
-    default: 
-      unknownCommand(msg);
+  if (commands[message]) {
+    commands[message](msg);
+  } else {
+    unknownCommand(msg);
   }
 });
+
+const shot = (msg) => {
+  msg.reply("kommt sofort!");
+}
+
+const commands = {
+  "shot": shot,
+}
 
 const unknownCommand = (msg) => {
   const phrases = [
@@ -31,7 +37,9 @@ const unknownCommand = (msg) => {
     "Sehe ich auch so..."
   ];
 
-  msg.reply(phrases[Math.floor(Math.random()) * phrases.length]);
+  const random = Math.floor(Math.random()) * phrases.length;
+
+  msg.reply(phrases[random]);
 }
 
 client.login(token);
