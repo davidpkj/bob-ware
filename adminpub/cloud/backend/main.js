@@ -1,4 +1,5 @@
 const fs = require("fs");
+const log = require("../../helpers/log_handler");
 
 let users = [];
 
@@ -9,7 +10,7 @@ const getCloudFiles = () => {
     array.push(file);
   });
 
-  console.log(array)
+  new log("info", "Cloud Server", array)
 
   return array;
 }
