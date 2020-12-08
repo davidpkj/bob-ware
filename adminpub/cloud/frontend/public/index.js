@@ -9,6 +9,8 @@ const createFileAnchor = (url) => {
 }
 
 socket.on("cloudDataResponse", (data) => {
+  document.querySelector("div").innerHTML = "";
+
   if (data) {
     for (let i of data) {
       createFileAnchor(i);

@@ -24,6 +24,10 @@ router.get("/", (_, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
+router.get("/:file", (req, res) => {
+  res.sendFile(path.join(__dirname, `../backend/content/${req.params["file"]}`));
+});
+
 router.post("/upload", multer({storage: diskStorage}).single("file"), (_, res) => {
   res.sendStatus(200);
 });
