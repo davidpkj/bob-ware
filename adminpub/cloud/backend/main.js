@@ -3,14 +3,14 @@ const log = require("../../helpers/log_handler");
 
 let users = [];
 
-const getCloudFiles = () => {
+const getCloudFiles = (userid) => {
   let array = [];
 
   fs.readdirSync(__dirname + "/content/").forEach((file) => {
     array.push(file);
   });
 
-  new log("info", "Cloud Server", array)
+  new log("info", "Cloud Server", `Anfrage auf Dateiendatenbank wurde genehmigt (SocketID: ${userid})`);
 
   return array;
 }
@@ -20,7 +20,7 @@ module.exports = (io) => {
     users.push(socket.id);  
 
     socket.on("cloudDataRequest", () => {
-      socket.emit("cloudDataResponse", getCloudFiles());
+      socket.emit("cloudDataResponse", getCloudFiles(socket.id));
     });
 
     socket.on("disconnect", () => {

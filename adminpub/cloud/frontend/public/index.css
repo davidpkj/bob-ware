@@ -1,3 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  background-color: #101925;
+}
+
+.list {
+  position: absolute;
+
+  top: 20%;
+  left: 50%;
+  color: transparent;
+  transform: translate(-50%, -50%);
+}
+
 a {
   display: block;
+
+  margin: 4px;
+  font-size: 18px;
+  color: #FFFFFF80;
+  text-decoration: none;
+  font-family: "Montserrat";
+
+  transition: all 0.1s;
+}
+
+a:hover, a:focus {
+  outline: none;
+  color: #FFFFFF;
+
+  transition: all 0.1s;
+}
+
+a::before {
+  position: absolute;
+  content: "⮞";
+
+  opacity: 0;
+  transform: translate(-225%, -10%);
+
+  transition: all 0.1s;
+}
+
+a:hover::before, a:focus::before {
+  content: "➤ ";
+
+  opacity: 1;
+  transform: translate(-125%, -10%);
+
+  transition: all 0.1s;
+}
+
+input {
+  outline: none;
+  width: calc(420px + 3em);
+}
+
+input[type="file"] {
+  position: absolute;
+
+  top: 10%;
+  left: 50%;
+  color: transparent;
+  transform: translate(-50%, -50%);
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+input[type="file"]::before {
+  display: inline-block;
+  content: "Hochladen";
+
+  width: 350px;
+  height: 30px;
+  outline: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #FFFFFF;
+  line-height: 1.4;
+  padding: 16px 8px;
+  text-align: center;
+  margin-bottom: 10%;
+  border-radius: 15px;
+  font-family: "Montserrat";
+  background-color: #1F4287;
+}
+
+input[type="file"]:hover::before {
+  background-color: #274E9C;
+}
+
+input[type="file"]:active {
+  outline: 0;
 }
