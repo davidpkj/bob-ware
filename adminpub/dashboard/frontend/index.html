@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: #101925;
+        }
+
+        a {
+            display: block;
+
+            margin: 4px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #FFFFFF80;
+            text-decoration: none;
+            font-family: "Montserrat";
+
+            transition: all 0.1s;
+        }
+
+        a:hover, a:focus {
+            outline: none;
+            color: #FFFFFF;
+
+            transition: all 0.1s;
+        }
+
+        a::before {
+            position: absolute;
+            content: "⮞";
+
+            opacity: 0;
+            transform: translate(-225%, -10%);
+
+            transition: all 0.1s;
+        }
+
+        a:hover::before, a:focus::before {
+            content: "➤ ";
+
+            opacity: 1;
+            transform: translate(-125%, -10%);
+
+            transition: all 0.1s;
+        }
+
+        #links{
+            margin-top: 15%;
+            display: flex;
+            justify-content: space-evenly;
+        }
+    </style>
+</head>
+<body>
+    <div id="links">
+        <a href="../../cloud/" style="padding-left: 3em;"> Cloud </a>
+        <a href="../../poker/" style="padding-right: 3em;"> Pokern </a>
+    </div>
+</body>
+</html>

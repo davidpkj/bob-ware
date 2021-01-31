@@ -1,0 +1,72 @@
+body{
+    margin: 0;
+    background-color: darkgreen;
+}
+
+h1{
+    display: inline;
+    text-shadow: 0.07em 0.1em 0.1em black;
+    font-size: 4.5em;
+    font-family: Oregano;
+    color: red;
+}
+
+img {
+    -webkit-filter: drop-shadow(0.3em 0.5em 0.4em black);
+    filter: drop-shadow(0.3em 0.5em 0.4em black);
+    margin-top: 1.5em;
+}
+
+#header{
+    display: flex;
+    justify-content: space-between;
+    background-color: forestgreen;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+}
+
+#logo{
+    margin-left: 2em;
+}
+
+#playerName{
+    display: block;
+    margin: 3em;
+    margin-bottom: 1em;
+    padding-left: 1em;
+    width: 12em;
+    height: 2em;
+    border-radius: 3%;
+    box-shadow: 0.2em 0.2em 0.75em gray;
+}
+
+#submit{
+    margin-right: 2.45em;
+    padding: 0.3em;
+    width: 7em;
+    font-size: medium;
+    font-family: Century;
+}
+
+#logIn{
+    text-align: right;
+    margin-bottom: 1em;
+}
+
+#yourStets{
+    display: none;
+}
+
+#pList{
+    display: none;
+}
+
+.list{
+    margin: 2em;
+    padding: 1.5em;
+    padding-left: 0.7em;
+    padding-top: unset;
+    background-color: darkolivegreen;
+    border-radius: 5%;
+    box-shadow: 0.3em 0.3em 1em black;
+}

@@ -6,12 +6,39 @@
   <title>Poker</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oregano&display=swap');
+    </style> 
+  <link rel="stylesheet" href="index.css">
   <script src="/socket.io/socket.io.js" defer></script>
   <script src="index.js" defer></script>
 </head>
 
-<body>
-  Poker
+<body> 
+  <div id="header">
+    <div id="logo">
+      <h1> Pokern </h1>
+      <img src="./cards.png" width="85em" height="auto">
+    </div>
+    <div id="logIn">
+      <input type="text" id="playerName" placeholder="Name">
+      <input type="button" id="submit" value="Beitreten" onclick="join()">
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <div class="list" id="yourStets">
+        <h2> Dein Account: </h2>
+        <p> Deine Chips: </p>
+        <p> 10.000 </p>
+      </div>
+    </div>
+    <div>
+      <div class="list" id="pList">
+        <p> jandrik </p>
+        <p> jesper </p>
+      </div>
+    </div>
+  </div>
 </body>
-
 </html>
