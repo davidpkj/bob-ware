@@ -1,10 +1,17 @@
 var socket = io();
 
-const join = () => {    // tut den Namen nach submit in pList
-    const name = document.getElementById("playerName").value;
-    document.getElementById("playerName").value = "";
+const form = document.querySelector("form");
 
-    const p = document.createElement("p");
-    p.innerHTML = name;
-    document.getElementById("pList").appendChild(p);
-};
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    let name = document.getElementById("playerName").value;
+    if (name) {
+        name.trim();
+        socket.emit("join", name);
+        
+        const p = document.createElement("p");
+        p.innerHTML = name;
+        document.getElementById("pList").appendChild(p);
+        name = "";
+    } 
+});
