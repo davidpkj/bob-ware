@@ -106,3 +106,4 @@ dist
 adminpub/cloud/backend/content/*
 passphrase
 key.pem
+content

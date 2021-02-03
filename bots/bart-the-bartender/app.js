@@ -18,7 +18,7 @@ client.on("message", (msg) => {
     return;
   }
 
-  if (!msg.member.roles.cache.some((role) => role.name == "hecka")) return;
+  if (!msg.member.roles.cache.some((role) => role.id == "783393629598908527")) return;
 
   let message = msg.content.toLowerCase().substring(1, msg.content.length);
 
