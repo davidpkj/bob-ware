@@ -15,13 +15,14 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
 require("./backend/cloud/cloudsocket")(io);
+require("./backend/poker/pokersocket")(io);
 
 // EJS Config
 app.set("views", path.join(__dirname, "/public/views"));
 app.set("view engine", "ejs");
 
-// Implement cleaning
-require("./helpers/clean_handler")();
+// TODO: Initialize cleaner
+// require("./helpers/clean_handler")();
 
 // Start server
 const port = 8000;

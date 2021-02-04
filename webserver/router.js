@@ -28,17 +28,17 @@ const htmlpath = `${__dirname}/frontend/views/`;
 
 // Dashboard
 router.get(["/", "/dashboard"], (_, res) => {
-  res.sendFile(htmlpath + "dashboard.html");
+  res.sendFile(`${htmlpath}/dashboard.html`);
 });
 
 // Poker
 router.get(["/poker"], (_, res) => {
-  res.sendFile(htmlpath + "poker.html");
+  res.sendFile(`${htmlpath}/poker.html`);
 });
 
 // Cloud
 router.get(["/cloud"], (_, res) => {
-  res.sendFile(htmlpath + "cloud.html");
+  res.sendFile(`${htmlpath}/cloud.html`);
 });
 
 // Cloud download

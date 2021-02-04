@@ -1,72 +1,87 @@
-body{
-    margin: 0;
-    background-color: darkgreen;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Zilla+Slab:wght@300&display=swap');
+
+body {
+  margin: 0;
+  background-color: #29452a;
 }
 
-h1{
-    display: inline;
-    text-shadow: 0.07em 0.1em 0.1em black;
-    font-size: 4.5em;
-    font-family: Oregano;
-    color: red;
+/*
+29452a
+315031
+3b623b
+416d41
+4c7849
+*/
+
+h1 {
+  position: relative;
+  display: block;
+
+  font-size: 96px;
+  margin: 0.5em 0;
+  color: #FFFFFF;
+  text-align: center;
+  font-family: "Zilla Slab";
+}
+
+/* LOGIN OR INFORMATION */
+.information-wrapper {
+  text-align: center;
+}
+
+input, button {
+  margin: 4px;
+  width: 300px;
+  height: 50px;
+  border: none;
+  outline: none;
+  padding: 14px;
+  font-size: 16px;
+  color: #FFFFFF80;
+  box-sizing: border-box;
+
+  background-color: #315031;
+}
+
+input, button:hover, button:focus {
+  color: #FFFFFF;
+}
+
+button:hover, button:focus {
+  background-color: #416d41;
+}
+
+input::placeholder {
+  color: #FFFFFF80;
 }
 
 img {
-    -webkit-filter: drop-shadow(0.3em 0.5em 0.4em black);
-    filter: drop-shadow(0.3em 0.5em 0.4em black);
-    margin-top: 1.5em;
+  margin-bottom: 48px;
+  max-width: 50vw;
 }
 
-#header{
-    display: flex;
-    justify-content: space-between;
-    background-color: forestgreen;
-    border-bottom-left-radius: 2em;
-    border-bottom-right-radius: 2em;
+p, span {
+  font-size: 24px;
+  color: #FFFFFF;
+  font-family: "Montserrat";
 }
 
-#logo{
-    margin-left: 2em;
+#ready.enabled {
+  color: #FFFFFF;
+  background-color: #4c7849;
 }
 
-#playerName{
-    display: block;
-    margin: 3em;
-    margin-bottom: 1em;
-    padding-left: 1em;
-    width: 12em;
-    height: 2em;
-    border-radius: 3%;
-    box-shadow: 0.2em 0.2em 0.75em gray;
+.information {
+  display: none;
 }
 
-#submit{
-    margin-right: 2.45em;
-    padding: 0.3em;
-    width: 7em;
-    font-size: medium;
-    font-family: Century;
-}
+@media only screen and (max-width: 620px) {
+  h1 {
+    font-size: 48px;
+  }
 
-#logIn{
-    text-align: right;
-    margin-bottom: 1em;
-}
-
-#yourStets{
-    display: none;
-}
-
-#pList{
-    display: none;
-}
-
-.list{
-    margin: 2em;
-    padding: 1.5em;
-    padding-left: 0.7em;
-    padding-top: unset;
-    background-color: darkolivegreen;
-    border-radius: 5%;
-    box-shadow: 0.3em 0.3em 1em black;
+  input, button {
+    width: 75vw;
+    text-align: center;
+  }
 }
