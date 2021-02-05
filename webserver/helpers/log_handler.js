@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const output = `${__dirname}/../logs/${Date.now()}.log`;
+const nologfile = `${__dirname}/../.nologs`;
 
 // Catches errors
 const onerror = (error) => {
@@ -11,6 +12,8 @@ const onerror = (error) => {
 
 // Logs to log file
 const logtofile = (sender, message, status = 200, data = null) => {
+  if (fs.existsSync(nologfile)) return;
+
   const date = new Date().toLocaleString();
   
   if (!fs.existsSync(path.dirname(output))) fs.mkdirSync(path.dirname(output));
