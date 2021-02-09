@@ -1,8 +1,30 @@
 class Player {
-  constructor(id, name, chips = 5000, readyState = false) {
+  constructor(id, name, chips = 5000, cards = [], readyState = false) {
     this.id = id;
     this.name = name;
     this.chips = chips;
+    this.cards = cards;
+    this.readyState = readyState;
+  }
+
+  // Verlässt die Runde
+  pass() {
+
+  }
+
+  // Gleicht den chipsatz des vorherigen Spielers aus
+  call() {
+
+  }
+
+  // Setzt einen höheren Satz als der vorherige Spieler
+  raise() {
+    
+  }
+
+  // Setzt nichts, wenn keiner vorher Setzt
+  check() {
+
   }
 
   //cards = [];

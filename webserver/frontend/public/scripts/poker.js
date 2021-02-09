@@ -1,16 +1,17 @@
 const socket = io();
 
 const sendUsername = () => {
-  const name = usernameInput.value;
+  let name = usernameInput.value;
 
   if (name) {
-    name.trim();
-    name.replace(/[\!\"\§\$\%\&\/\\\(\)\=\?\}\]\[\{\<\>\|\.\,\;\:\_\@\~\'\+\*]/, "");
+    name = name.trim();
+    name = name.replaceAll(/[\!\"\§\$\%\&\/\\\(\)\=\?\}\]\[\{\<\>\|\.\,\;\:\_\@\~\'\+\*]/g, "");
 
-    socket.emit("joinRequest", name);
+    if (name != "") socket.emit("joinRequest", name);
   }
 
   usernameInput.value = "";
+  document.activeElement.blur();
 }
 
 const usernameInput = document.querySelector("#username");
@@ -40,5 +41,15 @@ socket.on("joinResponse", (response) => {
 
     document.querySelector(".login").remove();
     document.querySelector(".information").style.display = "block";
+  } else {
+    alert("Anmeldung fehlgeschlagen");
   }
+});
+
+socket.on("gamestatechange", (gamestate) => {
+  // if (gamestate.running) return; // spectate
+
+  document.querySelector(".time").innerText = gamestate.time;
+  document.querySelector(".readyCount").innerText = gamestate.readyCount;
+  document.querySelector(".playerCount").innerText = gamestate.playerCount;
 });

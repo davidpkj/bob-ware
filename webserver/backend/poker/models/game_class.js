@@ -1,14 +1,19 @@
 const log = require("../../../helpers/log_handler");
 const Player = require("../models/player_class");
+const Util = require("../../../helpers/util");
 const fs = require("fs");
 
 class Game {
   running = false;
+  tableCards = [];
   currentPlayers = [];
 
   // Versucht eine Runde zu Starten
   startRound() {
-    if (this.running == true || this.players < 2) return;
+    if (this.running == true || this.currentPlayers.length > 8 || this.currentPlayers.length < 2) {
+      log(`warn`, `Poker System`, `Poker kann nicht starten (running: ${this.running}, players: ${this.currentPlayers.length})`);
+      return;
+    }
 
     // TODO: IMPLEMENT ROUNDS
     log("info", "Poker System", "Eine Runde Poker beginnt");
@@ -51,55 +56,34 @@ class Game {
     }
   }
 
+  // Ändern des Bereitheitszustandes, gibt bei mind. 1 ready playern true aus
   toggleReadyState(socketid) {
     for (let player of this.currentPlayers) {
       if (player.id == socketid) player.readyState = !player.readyState;
+    }
+
+    if (Util.objectOfArrayWithProperty(this.currentPlayers, "readyState", true)) return true;
+
+    return false;
+  }
+
+  // Gibt den relevante Daten über den Zustand des Spiels als Objekt zurück
+  getState() {
+    return {
+      running: this.running,
+      readyCount: Util.allObjectsOfArrayWithProperty(this.currentPlayers, "readyState", true).length,
+      playerCount: this.currentPlayers.length
+    };
+  }
+
+  preflop() {
+    for (let player of this.currentPlayers) {
+      Cards
     }
   }
 
   /*
   static dealt = []; // Ausgeteilte Karten
-
-  static rndInt(max, min) {
-    return Math.floor(Math.random() * max) + min;
-  }
-
-  static getCard() {  // Gib eine noch nich ausgeteilte Card zurück
-    let rückgabe = [];
-    let card = this.rndInt(52, 1);
-
-    while (this.dealt.includes(card)) {
-      card = this.rndInt(52, 1);
-    }
-
-    this.dealt.push(card);
-
-    rückgabe[0] = 0;
-    while (card > 13) {
-      card -= 13;
-      if (card > 0) rückgabe[0]++;
-    }
-    switch (rückgabe[0]) {
-      case 0:
-        rückgabe[0] = "Kreutz";
-        break;
-      case 1:
-        rückgabe[0] = "Pik";
-        break;
-      case 2:
-        rückgabe[0] = "Herz";
-        break;
-      case 3:
-        rückgabe[0] = "Karo";
-        break;
-      default:
-        break;
-    }
-
-    rückgabe[1] = card + 1;
-
-    return new Card(rückgabe[0], rückgabe[1]);
-  }
 
   Phasen des Spiels:
   prefloop

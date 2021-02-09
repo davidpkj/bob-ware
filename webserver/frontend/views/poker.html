@@ -13,9 +13,7 @@
 </head>
 
 <body>
-  <nav>
-    <h1>Poker</h1>
-  </nav>
+  <h1>Poker</h1>
   <div class="information-wrapper">
     <img src="../assets/poker/cards.png">
     <div class="login">
@@ -23,10 +21,11 @@
       <button id="login">Beitreten</button>
     </div>
     <div class="information">
-      <p>Herzlich Willkommen <span class="name">$NAME</span>,</p>
-      <p>Sie haben derzeit <span class="chips">$PLAYER.CHIPS</span> Chips.</p>
+      <p>Herzlich Willkommen <span class="name">null</span>, Sie haben derzeit <span class="chips">null</span> Chips.</p>
+      <p class="gamestate">Ein Match startet in <span class="time">null</span>s (<span class="readyCount">null</span> von <span class="playerCount">null</span> Spieler)</p>
       <button id="logout">Verlassen</button>
       <button id="ready">Bereit</button>
+      <!-- <button id="spectate">Zuschauen</button>  auch über linkzugriff /poker/live --> 
     </div>
   </div>
 </body>

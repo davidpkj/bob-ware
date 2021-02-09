@@ -10,14 +10,14 @@ const getCloudFiles = (userid) => {
     array.push(file);
   });
 
-  log("info", "Cloud Server", `Anfrage auf Dateiendatenbankinhalt wurde genehmigt (SocketID: ${userid})`);
+  log("info", "Cloud System", `Anfrage auf Dateiendatenbankinhalt wurde genehmigt (SocketID: ${userid})`);
 
   return array;
 }
 
 module.exports = (io) => {
   io.on("connection", (socket) => {
-    users.push(socket.id);  
+    users.push(socket.id);
 
     socket.on("cloudDataRequest", () => {
       socket.emit("cloudDataResponse", getCloudFiles(socket.id));

@@ -43,23 +43,25 @@ router.get(["/cloud"], (_, res) => {
 
 // Cloud download
 router.get(["/cloud/:file"], (req, res) => {
-  const code = 500;
+  const respond = () => {
+    const code = 500;
+
+    res.status(code).render(`${htmlpath}/error.ejs`, {code: code});
+    log("error", "Cloud System", "Download ist fehlgeschlagen", code);
+  }
 
   if (!fs.existsSync("backend/cloud/content/")) {
-    fs.mkdir("backend/cloud/content/")
-    log("error", "Cloud Server", "Download verweigert", code);
-    res.status(code).render(`${htmlpath}/error.ejs`, {code: code});
+    fs.mkdir("backend/cloud/content/");
+    respond();
     return;
   }
 
   res.download(path.join(__dirname, `/backend/cloud/content/${req.params["file"]}`), (error) => {    
     if (error) {
-      log("error", "Cloud Server", "Download verweigert", code);
-      res.status(code).render(`${htmlpath}/error.ejs`, {code: code});
-      return;
+      respond();
+    } else {
+      log("info", "Cloud System", `Download wurde genehmigt`);
     }
-
-    log("info", "Cloud Server", `Download wurde genehmigt`);
   });
 });
 

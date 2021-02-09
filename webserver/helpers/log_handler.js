@@ -1,6 +1,6 @@
 const colors = require("colors");
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs");
 
 const output = `${__dirname}/../logs/${Date.now()}.log`;
 const nologfile = `${__dirname}/../.nologs`;
