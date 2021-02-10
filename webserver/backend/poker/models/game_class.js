@@ -15,6 +15,8 @@ class Game {
       return;
     }
 
+    const dealer = require("../models/dealer_class");
+
     // TODO: IMPLEMENT ROUNDS
     log("info", "Poker System", "Eine Runde Poker beginnt");
   }
