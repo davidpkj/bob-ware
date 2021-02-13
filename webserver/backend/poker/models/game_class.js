@@ -3,18 +3,37 @@ const Player = require("../models/player_class");
 const Util = require("../../../helpers/util");
 const fs = require("fs");
 
+let interval;
+
 class Game {
   running = false;
   tableCards = [];
   currentPlayers = [];
 
-  // Versucht eine Runde zu Starten
-  startRound() {
-    if (this.running == true || this.currentPlayers.length > 8 || this.currentPlayers.length < 2) {
-      log(`warn`, `Poker System`, `Poker kann nicht starten (running: ${this.running}, players: ${this.currentPlayers.length})`);
-      return;
+  // Versucht eine Runde zu starten (gibt true bei Erfolg aus)
+  async tryRoundStart() {
+    if (this.running == true || this.currentPlayers.length > 8 || this.currentPlayers.length < 2 || interval != null) {
+      log(`warn`, `Poker System`, `Poker kann nicht starten (running: ${this.running}, players: ${this.currentPlayers.length}, counting: ${interval ? true : false})`);
+      return false;
     }
 
+    let time = 30;
+
+    interval = setInterval(() => {
+      if (this.currentPlayers.length == 0 || time == 0) {
+        clearInterval(interval);
+        interval = null;
+
+        if (time == 0) this.startRound();
+        return true;
+      }
+
+      time--;
+    }, 1000);
+  }
+
+  // Startet eine Runde
+  startRound() {
     const dealer = require("../models/dealer_class");
 
     // TODO: IMPLEMENT ROUNDS
@@ -40,12 +59,12 @@ class Game {
     }
 
     let player = new Player(socketid, name, this.getUserData(name).chips);
-
     this.currentPlayers.push(player);
+    let roundStartResult = this.tryRoundStart();
 
     log("info", "Poker System", `Ein Client ist dem System beigetreten (Name: ${name})`);
 
-    return player;
+    return {"player": player, "roundStarting": roundStartResult};
   }
 
   // Verlassen des Systems
@@ -56,26 +75,6 @@ class Game {
         this.currentPlayers.splice(index);
       }
     }
-  }
-
-  // Ändern des Bereitheitszustandes, gibt bei mind. 1 ready playern true aus
-  toggleReadyState(socketid) {
-    for (let player of this.currentPlayers) {
-      if (player.id == socketid) player.readyState = !player.readyState;
-    }
-
-    if (Util.objectOfArrayWithProperty(this.currentPlayers, "readyState", true)) return true;
-
-    return false;
-  }
-
-  // Gibt den relevante Daten über den Zustand des Spiels als Objekt zurück
-  getState() {
-    return {
-      running: this.running,
-      readyCount: Util.allObjectsOfArrayWithProperty(this.currentPlayers, "readyState", true).length,
-      playerCount: this.currentPlayers.length
-    };
   }
 
   preflop() {

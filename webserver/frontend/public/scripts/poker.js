@@ -24,23 +24,17 @@ usernameInput.addEventListener("keydown", (event) => {
 });
 
 document.querySelector("#login").addEventListener("click", sendUsername);
-document.querySelector("#logout").addEventListener("click", () => location.reload());
-
-const readyButton = document.querySelector("#ready");
-
-readyButton.addEventListener("click", () => {
-  readyButton.classList.toggle("enabled");
-  socket.emit("toggleReadyState");
-  document.activeElement.blur();
-});
+// document.querySelector("#logout").addEventListener("click", () => location.reload());
 
 socket.on("joinResponse", (response) => {
   if (response != {}) {
-    document.querySelector(".name").innerText = response.name;
-    document.querySelector(".chips").innerText = response.chips;
+    /*
+    document.querySelector(".name").innerText = response.player.name;
+    document.querySelector(".chips").innerText = response.player.chips;
+    */
 
-    document.querySelector(".login").remove();
-    document.querySelector(".information").style.display = "block";
+    document.querySelector(".information-wrapper").remove();
+    document.querySelector(".game").style.display = "block";
   } else {
     alert("Anmeldung fehlgeschlagen");
   }

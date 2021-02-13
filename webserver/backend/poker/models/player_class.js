@@ -1,10 +1,9 @@
 class Player {
-  constructor(id, name, chips = 5000, cards = [], readyState = false) {
+  constructor(id, name, chips = 5000, cards = []) {
     this.id = id;
     this.name = name;
     this.chips = chips;
     this.cards = cards;
-    this.readyState = readyState;
   }
 
   // Verlässt die Runde

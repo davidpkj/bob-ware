@@ -4,6 +4,7 @@ const fs = require("fs");
 
 const output = `${__dirname}/../logs/${Date.now()}.log`;
 const nologfile = `${__dirname}/../.nologs`;
+let disableActiveLogging = false;
 
 // Catches errors
 const onerror = (error) => {
@@ -12,7 +13,7 @@ const onerror = (error) => {
 
 // Logs to log file
 const logtofile = (sender, message, status = 200, data = null) => {
-  if (fs.existsSync(nologfile)) return;
+  if (disableActiveLogging) return;
 
   const date = new Date().toLocaleString();
   
@@ -35,6 +36,12 @@ const log = (type, sender, message, status, append = true, data = null) => {
   if (append) logtofile(sender, message, status, data);
 }
 
-log(`info`, `Log Handler`, `Logging active, output is ${output}`);
+if (fs.existsSync(nologfile)) disableActiveLogging = true;
+
+if (disableActiveLogging) {
+  log(`info`, `Log Handler`, `Logging ist passiv`);
+} else {
+  log(`info`, `Log Handler`, `Logging ist aktiv, output ist ${output}`);
+}
 
 module.exports = log;
