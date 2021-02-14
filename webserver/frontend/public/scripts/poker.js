@@ -47,3 +47,31 @@ socket.on("gamestatechange", (gamestate) => {
   document.querySelector(".readyCount").innerText = gamestate.readyCount;
   document.querySelector(".playerCount").innerText = gamestate.playerCount;
 });
+
+let bool = true;
+function toggle () {
+  if (bool) {
+    document.querySelector(".game").style.display = "block";
+    document.querySelector("h1").style.display = "none";
+    document.querySelector(".information-wrapper").style.display = "none";
+    document.querySelector("body").style.height = "55vh";
+    bool = !bool;
+  } else { 
+    document.querySelector(".game").style.display = "none";
+    document.querySelector("h1").style.display = "block";
+    document.querySelector(".information-wrapper").style.display = "block";
+    document.querySelector("body").style.height = "100vh";
+    bool = !bool;
+  }
+}
+toggle();
+
+function msg (msg) {
+  const p = document.createElement("p");
+  p.innerHTML = msg;
+  p.style.fontSize = "14px";
+  p.style.color = "#FFFFFF80";
+  p.style.margin = "10px";
+  p.style.marginBottom = "0px";
+  document.querySelector(".chat").appendChild(p);
+}

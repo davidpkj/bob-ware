@@ -71,13 +71,57 @@ p, span {
   font-family: "Montserrat";
 }
 
-#ready.enabled {
-  color: #29452a;
-  background-color: #FFFFFF;
-}
-
 .information, .gamestate {
   display: none;
+}
+
+.pList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.player {
+  background-color: #3B623B;
+  width: 22vw;
+  height: 2em;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 0px;
+}
+
+.tisch {
+  display: flex;
+  justify-content: left;
+  margin-top: 8vh;
+}
+
+.tCards {
+  margin: 0px;
+  margin-left: 7vw;
+}
+
+.hand {
+  display: flex;
+}
+
+.gButtons{
+  width: 150px;
+  height: 35px;
+  display: block;
+  margin-top: 0px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.chat {
+  background-color: #3B623B;
+  width: -moz-available;
+  margin-left: 20px;
+  margin-right: 42px;
+  overflow: auto;
 }
 
 @media only screen and (max-width: 620px) {
