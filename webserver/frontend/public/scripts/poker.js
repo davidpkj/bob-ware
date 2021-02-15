@@ -4,7 +4,7 @@ const appendMessage = (msg) => {
   const p = document.createElement("p");
 
   p.innerText = msg;
-  document.querySelector(".chat > div").appendChild(p);
+  document.querySelector(".messages").appendChild(p);
 }
 
 const sendUsername = () => {

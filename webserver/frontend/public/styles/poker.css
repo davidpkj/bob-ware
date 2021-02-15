@@ -5,7 +5,6 @@ body {
 
   margin: 0;
   height: 100vh;
-  overflow: hidden;
   flex-direction: column;
   justify-content: center;
   background-color: #29452a;
@@ -79,70 +78,79 @@ p, span {
 .game {
   display: none;
 
+  margin: 25px;
   height: 100vh;
-  margin-left: 1vw;
   flex-direction: column;
 }
 
+.game > div {
+  height: calc(100vh - 156px);
+}
+
 .player-list {
+  position: relative;
   display: flex;
 
   flex-wrap: wrap;
-  height: calc(4em + 4vw);
+  flex-direction: row;
   justify-content: center;
+  align-content: flex-start;
+  height: 156px !important;
 }
 
 .player {
   height: 2em;
+  margin: 15px;
   padding: 10px;
-  width: 23.75vw;
   text-align: center;
-  margin-bottom: 0px;
-  margin: 1vw 1vw 0 0;
   box-sizing: border-box;
+  width: calc(25% - 30px);
   background-color: #3B623B;
 }
 
-.table {
+.lower-wrapper, .table, .hand {
   display: flex;
 
-  justify-content: left;
-}
-
-.card {
-  margin-right: 1vw;
-  width: auto;
-  box-sizing: border-box;
-  height: calc( calc( calc(100vh - calc(4em + 4vw)) / 2) - 4vh);
+  justify-content: space-between;
 }
 
 .hand {
-  display: flex;
+  width: calc(calc(500px + calc(calc(100% - 1250px) / 4)) + 20px);
 }
 
-.card-wrapper {
+.card {
+  width: 250px;
+  margin: 15px;
+  height: 356px;
+  box-sizing: border-box;
+
+  border-radius: 15px;
+}
+
+.container {
+  position: relative;
+
   height: calc(100vh - calc(4em + 4vw));
-}
-
-.card-wrapper > div {
-  margin-top: 1vw;
 }
 
 .button-wrapper {
   display: flex;
 
+  width: 250px;
+  margin: 15px;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.button {
+.action-button {
   display: block;
 
+  height: 2em;
   width: 250px;
-  height: calc( calc( calc( calc( calc(100vh - calc(4em + 4vw)) / 2) - 4vh) - 20px) / 4);
   padding: 10px;
-  font-size: 18px;
-  margin: 0 0 5px 0 !important;
+  font-size: 24px;
+  margin: 0 0 15px 0;
+  font-family: "Montserrat";
 }
 
 #quit-button {
@@ -152,14 +160,13 @@ p, span {
 .chat {
   position: relative;
 
-  width: 100%;
-  height: calc( calc( calc(100vh - calc(4em + 4vw)) / 2) - 4vh);  
-  margin-left: 20px;
-  margin-right: 42px;
+  margin: 15px;
+  height: 356px;
   background-color: #3B623B;
+  width: calc(500px + calc(calc(100% - 1250px) / 4));
 }
 
-.chat > div {
+.messages {
   position: absolute;
 
   height: calc(100% - 55px);
@@ -167,7 +174,7 @@ p, span {
   overflow: auto;
 }
 
-.chat > div > p {
+.messages > p {
   font-size: 16px;
   padding-left: 1em;
 }
