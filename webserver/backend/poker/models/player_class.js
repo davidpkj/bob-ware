@@ -1,18 +1,14 @@
 class Player {
-  constructor(id, name, chips = 5000, cards = []) {
+  constructor(id, name, chips = 5000, cards = [], notPlaying = false) {
     this.id = id;
     this.name = name;
     this.chips = chips;
     this.cards = cards;
+    this.notPlaying = notPlaying;
   }
 
   // Verlässt die Runde
   pass() {
-
-  }
-
-  // Gleicht den chipsatz des vorherigen Spielers aus
-  call() {
 
   }
 
@@ -21,9 +17,9 @@ class Player {
     
   }
 
-  // Setzt nichts, wenn keiner vorher Setzt
+  // Wiederholt letzte Action
   check() {
-
+    
   }
 
   //cards = [];

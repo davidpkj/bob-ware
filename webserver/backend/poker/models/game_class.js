@@ -9,6 +9,8 @@ class Game {
   running = false;
   tableCards = [];
   currentPlayers = [];
+  lastBet = 0;
+  pot = 0;
 
   // Versucht eine Runde zu starten (gibt true bei Erfolg aus)
   async tryRoundStart() {

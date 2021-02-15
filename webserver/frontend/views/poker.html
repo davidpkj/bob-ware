@@ -13,16 +13,16 @@
 </head>
 
 <body>
-  <h1>Poker</h1>
   <div class="information-wrapper">
-    <img src="../assets/poker/cards.png">
+  <h1>Poker</h1>
+    <img class="title-cards" src="../assets/poker/cards.png">
     <div class="login">
       <input id="username" autocomplete="off" placeholder="Name">
       <button id="login">Beitreten</button>
     </div>
   </div>
-  <div class="game" style="height: 100%;">
-    <div class="pList" style="text-align: center;">
+  <div class="game">
+    <div class="player-list">
       <p class="player">Jesper</p>
       <p class="player">Jandrik</p>
       <p class="player"></p>
@@ -32,31 +32,33 @@
       <p class="player"></p>
       <p class="player"></p>
     </div>
-    <div class="tisch">
-      <img class="tCards" src="./assets/poker/cards/clubs2.png" width="130vw" height="auto">
-      <img class="tCards" src="./assets/poker/cards/clubs2.png" width="130vw" height="auto">
-      <img class="tCards" src="./assets/poker/cards/clubs2.png" width="130vw" height="auto">
-      <img class="tCards" src="./assets/poker/cards/clubs2.png" width="130vw" height="auto">
-      <img class="tCards" src="./assets/poker/cards/clubs2.png" width="130vw" height="auto">
-    </div>
-    <div style="margin-top: 8vh; display: flex;">
+    <div class="card-wrapper">
+      <div class="table">
+        <img class="card" src="./assets/poker/cards/clubs2.png">
+        <img class="card" src="./assets/poker/cards/clubs2.png">
+        <img class="card" src="./assets/poker/cards/clubs2.png">
+        <img class="card" src="./assets/poker/cards/clubs2.png">
+        <img class="card" src="./assets/poker/cards/clubs2.png">
+      </div>
+
       <div class="hand">
-        <img class="tCards hCards" src="./assets/poker/cards/clubs2.png" width="130vw" height="auto">
-        <img class="tCards hCards" src="./assets/poker/cards/clubs2.png" width="130vw" height="auto">
-      </div>
-      <div style="margin-left: 20px; display: grid;">
-        <div>  
-          <button class="gButtons"> Check </button>
-          <button class="gButtons"> Raise </button>
-          <button class="gButtons"> Pass </button>
+        <img class="card" src="./assets/poker/cards/clubs2.png">
+        <img class="card" src="./assets/poker/cards/clubs2.png">
+        <div class="button-wrapper">
+          <div>  
+            <button class="button">Check</button>
+            <button class="button">Raise</button>
+            <button class="button">Pass</button>
+          </div>
+          <button id="quit-button" class="button">Quit</button>
         </div>
-        <button class="gButtons" style="align-self: end;"> Quite </button>
-      </div>
       <div class="chat">
-        
+        <div></div>
+        <input type="text" id="chat-input"> 
       </div>
     </div>
   </div>
+      </div>
 </body>
 
 </html>

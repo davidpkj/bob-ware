@@ -1,5 +1,12 @@
 const socket = io();
 
+const appendMessage = (msg) => {
+  const p = document.createElement("p");
+
+  p.innerText = msg;
+  document.querySelector(".chat > div").appendChild(p);
+}
+
 const sendUsername = () => {
   let name = usernameInput.value;
 
@@ -34,7 +41,7 @@ socket.on("joinResponse", (response) => {
     */
 
     document.querySelector(".information-wrapper").remove();
-    document.querySelector(".game").style.display = "block";
+    document.querySelector(".game").style.display = "flex";
   } else {
     alert("Anmeldung fehlgeschlagen");
   }
@@ -48,30 +55,29 @@ socket.on("gamestatechange", (gamestate) => {
   document.querySelector(".playerCount").innerText = gamestate.playerCount;
 });
 
+document.querySelector("#chat-input").addEventListener("keydown", (event) => {
+  if (event.key == "Enter") {
+    event.preventDefault();
+    appendMessage(document.querySelector("#chat-input").value);
+    document.querySelector("#chat-input").value = "";
+  }
+});
+
+/* TODO: REMOVE DEV FUNC */
 let bool = true;
 function toggle () {
   if (bool) {
-    document.querySelector(".game").style.display = "block";
+    document.querySelector(".game").style.display = "flex";
     document.querySelector("h1").style.display = "none";
     document.querySelector(".information-wrapper").style.display = "none";
-    document.querySelector("body").style.height = "55vh";
     bool = !bool;
   } else { 
     document.querySelector(".game").style.display = "none";
     document.querySelector("h1").style.display = "block";
     document.querySelector(".information-wrapper").style.display = "block";
-    document.querySelector("body").style.height = "100vh";
     bool = !bool;
   }
 }
 toggle();
 
-function msg (msg) {
-  const p = document.createElement("p");
-  p.innerHTML = msg;
-  p.style.fontSize = "14px";
-  p.style.color = "#FFFFFF80";
-  p.style.margin = "10px";
-  p.style.marginBottom = "0px";
-  document.querySelector(".chat").appendChild(p);
-}
+/* */
