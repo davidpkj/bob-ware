@@ -122,6 +122,10 @@ p, span {
   width: 250px;
   margin: 15px;
   height: 356px;
+
+  height: 276px;
+  width: auto;
+
   box-sizing: border-box;
 
   border-radius: 15px;
