@@ -42,4 +42,12 @@ class Dealer {
   }
 }
 
+/*
+  Phasen des Spiels:
+  preflop
+  flop
+  turn
+  river
+*/
+
 module.exports = new Dealer();
