@@ -194,6 +194,10 @@ p, span {
   box-sizing: border-box;
 }
 
+.blind {
+  color: #c9c9c9;
+}
+
 @media only screen and (max-width: 620px) {
   h1 {
     font-size: 48px;

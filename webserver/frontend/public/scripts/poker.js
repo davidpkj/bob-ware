@@ -96,47 +96,18 @@ function toggle () {
 }
 
 // Fügt die Spielernamen in die playerList ein
-socket.on("roundStarting", (currentPlayer) => {
-  currentPlayers = currentPlayer;
-  let playerList = document.getElementsByClassName("player");
-
-  for (player of currentPlayer) {
-    for (let element of playerList) {
-
-      if ( element.innerHTML == "" ) {
-        element.innerHTML = player.name + " (" + player.chips + ")";
-        break;
-      }
-
-    }
-  }
+socket.on("roundStarting", (currentPlayers) => {
+  renderPlayerList(currentPlayers);
 });
 
-// [0] = Big Blind, [1] = Small Blind, [2] = Dealer
-socket.on("blinds", (blinds) => {
-  console.log(blinds);
-  let playerList = document.getElementsByClassName("player");
-  
-  for (let i = 0; i < blinds.length; i++) {
-    for (let p = 0; p < currentPlayers.length; p++) {
-      
-      if ( blinds[i] == currentPlayers[p].name){
-        let element = playerList[p].innerHTML;
-        
-        switch (i) {
-          case 0:
-            playerList[p].innerHTML = `<span style="color: #c9c9c9">[BB] </span> ${element}`;
-            break;
-          case 1:
-            playerList[p].innerHTML = `<span style="color: #c9c9c9">[SB] </span> ${element}`;
-            break;
-          case 2:
-            playerList[p].innerHTML = `<span style="color: #c9c9c9">[D] </span> ${element}`;
-            break;
-          default:
-            alert("Bei den Blinds ist ein Fehler");
-        }
-      } 
-    }
+// Schreibt die Blinds, Spielernamen und Chips in die Liste
+const renderPlayerList = (players) => {
+  const elements = document.getElementsByClassName("player");
+
+  for (let index in elements) {
+    if (index > players.length - 1) break;
+
+    const player = players[index];
+    elements[index].innerHTML = `${player.blind != "" ? `<span class="blind">[${player.blind.replaceAll(/[^A-Z]/g, "")}]</span> ` : ""}${player.name} (${player.chips})`;
   }
-});
+}

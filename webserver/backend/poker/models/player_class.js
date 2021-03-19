@@ -1,9 +1,10 @@
 class Player {
-  constructor(id, name, chips = 5000, cards = [], notPlaying = false) {
+  constructor(id, name, chips = 5000, cards = [], blind = "", notPlaying = false) {
     this.id = id;
     this.name = name;
     this.chips = chips;
     this.cards = cards;
+    this.blind = blind;
     this.notPlaying = notPlaying;
   }
 

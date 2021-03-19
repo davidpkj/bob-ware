@@ -13,13 +13,13 @@ class Game {
   pot = 0;
 
   // Versucht eine Runde zu starten (gibt true bei Erfolg aus)
-  async tryRoundStart(sendSocketRoundStartCallback) {
+  async tryRoundStart(roundStarting) {
     if (this.running == true || this.currentPlayers.length > 8 || this.currentPlayers.length < 2 || interval != null) {
       log(`warn`, `Poker System`, `Poker kann nicht starten (running: ${this.running}, players: ${this.currentPlayers.length}, counting: ${interval ? true : false})`);
       return false;
     }
 
-    let time = 30;
+    let time = 5;
 
     interval = setInterval(() => {
       if (this.currentPlayers.length < 2 || time == 0) {
@@ -27,37 +27,62 @@ class Game {
         interval = null;
 
         if (time == 0) {
-          
-          sendSocketRoundStartCallback();
           this.running = true;
+          this.startRound(roundStarting);
           return true;
         }
+
+        return false;
       }
 
       time--;
     }, 1000);
   }
 
-  // Startet eine Runde
-  startRound() {
+  // Startet ein Spiel KEINE RUNDE // TODO: Rename
+  startRound(roundStarting) {
     const dealer = require("../models/dealer_class");
+    this.setBlinds();
 
     // TODO: IMPLEMENT ROUNDS
     log("info", "Poker System", "Eine Runde Poker beginnt");
+    roundStarting();
   }
 
-  // Gibt Array mit 3 aufeinander Folgenden Spielern für Blinds aus
-  setBlinds(indizes) {
-    let res = []; 
-    let index = indizes ?? Util.randomNumber(0, this.currentPlayers.length);
-    for (let i = 0; i < 3; i++) {
-      if ( index - i < 0 ) index = this.currentPlayers.length + i - 1;
-      res.push(this.currentPlayers[index - i].name);
-    }
-    // Wenn nurnoch 2 Spieler haben die Blinds vor dem Dealer Priorität
-    if (res[0] == res[2]) res.splice(2); 
+  // Setzt die Blinds für die Spieler // TODO: Simpify
+  setBlinds() {
+    const blinds = ["Dealer", "Small Blind", "Big Blind"];
+    const players = this.currentPlayers;
 
-    return { "res": res, "index": index};
+    if (Util.allObjectsOfArrayWithProperty(players, "blind", "").length == players.length) {
+      let random = Util.randomNumber(0, players.length);
+
+      for (let i = 0; i < 3; i++) {
+        // Bei zwei spielern den Dealer weglassen
+        if (i == 3 && players == 2) break;
+        // Wenn drüber
+        if (random + i == players.length) random = 0 - i;
+
+        players[random + i].blind = blinds[i];
+      }
+    } else {
+      let target = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Big Blind"));
+
+      for (let player of players) {
+        player.blind = "";
+      }
+    
+      for (let i = 2; i >= 0; i--) {
+        // Bei zwei Spielern den Dealer weglassen
+        if (i == 0 && players.length == 2) break;
+        // Wenn drüber
+        if (target - 1 + i >= players.length) target = 1 - i;
+        // Wenn drunter
+        if (target - 1 + i < 0) target = players.length - i;
+
+        players[target - 1 + i].blind = blinds[i];
+      }
+    }
   }
 
   // Liest mögliche Spielerinformation aus
@@ -79,18 +104,18 @@ class Game {
   }
 
   // Tritt dem System bei außer Spiel Läuft
-  async join(name, socketid, sendSocketRoundStartCallback) {
+  async join(name, socketid, roundStarting) {
     for (let player of this.currentPlayers || this.running) {
       if (player.name == name) return false;
     }
 
     let player = new Player(socketid, name, this.getUserData(name).chips);
     this.currentPlayers.push(player);
-    let roundStartResult = await this.tryRoundStart(sendSocketRoundStartCallback);
+    this.tryRoundStart(roundStarting);
 
     log("info", "Poker System", `Ein Client ist dem System beigetreten (Name: ${name})`);
 
-    return {"player": player, "roundStarting": roundStartResult};
+    return {"player": player};
   }
 
   // Verlassen des Systems
