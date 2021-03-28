@@ -11,6 +11,6 @@ const sortiment = {
   "drinks": "Ich kann hiermit dienen: Martini, Whiskey, Gin, Vodka, Rum, Wein, Coacktail und einem Shot",
 }
 
-module.exports = alcohol = (msg) => {
+module.exports = alcohol = (_, msg) => {
   msg.reply(sortiment[msg.content.toLowerCase().substring(1, msg.content.length)]);
 }

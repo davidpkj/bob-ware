@@ -2,8 +2,9 @@ const discord = require("discord.js");
 const client = new discord.Client();
 
 const token = require("./token");
-const prefix = "$";
+const prefix = "&";
 
+const audio = require("./functions/audio");
 const alcohol = require("./functions/alcohol");
 const bashcmd = require("./functions/bashcmd");
 
@@ -25,8 +26,10 @@ client.on("message", (msg) => {
 
   try {
     if (commands[message]) {
-      commands[message](msg);
+      console.log(`[ ${new Date().toLocaleString()} ] (OK) ${msg.author.username}: ${msg}`);
+      commands[message](client, msg);
     } else {
+      console.log(`[ ${new Date().toLocaleString()} ] (ERROR) ${msg.author.username}: ${msg}`);
       unknownCommand(msg);
     }
   } catch (e) {
@@ -47,6 +50,12 @@ const commands = {
   "wein": alcohol,
   "drinks": alcohol,
   "bash": bashcmd,
+  "play": audio.play,
+  "stop": audio.stop,
+  "pause": audio.pause,
+  "resume": audio.resume,
+  "skip": audio.skip,
+  "np": audio.nowplaying
 }
 
 const unknownCommand = (msg) => {
