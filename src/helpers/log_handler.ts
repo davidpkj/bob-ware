@@ -2,17 +2,17 @@ import * as colors from "colors";
 import * as path from "path";
 import * as fs from "fs";
 
-const output = `${__dirname}/../logs/${Date.now()}.log`;
-const nologfile = `${__dirname}/../.nologs`;
-let disableActiveLogging = false;
+const output: string = `${__dirname}/../logs/${Date.now()}.log`;
+const nologfile: string = `${__dirname}/../.nologs`;
+let disableActiveLogging: boolean = false;
 
 // Catches errors
-const onerror = (error) => {
+const onerror = (error: NodeJS.ErrnoException) => {
   if (error) log("error", "Log Handler", "Die aktuelle Logdatei konnte nicht beschrieben werden.");
 }
 
 // Logs to log file
-const logtofile = (sender, message, status = 200, data = null) => {
+const logtofile = (sender: string, message: string, status: number = 200, data: any = null) => {
   if (disableActiveLogging) return;
 
   const date = new Date().toLocaleString();
@@ -24,7 +24,7 @@ const logtofile = (sender, message, status = 200, data = null) => {
 }
 
 // Logs to console
-export const log = (type, sender, message, status = null, append = true, data = null) => {
+export const log = (type: string, sender: string, message: string, status: number = null, append: boolean = true, data: any = null) => {
   colors.setTheme({
     info: "green",
     warn: "yellow",
@@ -43,5 +43,3 @@ if (disableActiveLogging) {
 } else {
   log(`info`, `Log Handler`, `Logging ist aktiv, output ist ${output}`);
 }
-
-module.exports = log;

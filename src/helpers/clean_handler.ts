@@ -1,4 +1,5 @@
-const log = require("./log_handler");
+/*
+import { log } from "helpers/log_handler";
 
 const timeUntilFirday = () => {
 /*   const now = new Date(); // jetzt ab 1970 in ms
@@ -13,7 +14,7 @@ const timeUntilFirday = () => {
 
   // let milisToNextFriday = nextFriday.tomilis();
   
-  console.log(nextFriday, (5 - today)); */
+  console.log(nextFriday, (5 - today));
 
   // return 5000; // (now - milisToNextFriday)
 
@@ -30,3 +31,4 @@ const clean = () => {
 }
 
 module.exports = clean;
+*/

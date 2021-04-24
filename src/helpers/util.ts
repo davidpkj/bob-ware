@@ -1,5 +1,5 @@
-class Util {
-  static objectOfArrayWithProperty(array, key, value) {
+export class Util {
+  static objectOfArrayWithProperty(array: Array<any>, key: any, value: any): any {
     for (let object of array) {
       if (object[key] == value) return object;
     }
@@ -7,8 +7,8 @@ class Util {
     return null;
   }
 
-  static allObjectsOfArrayWithProperty(array, key, value) {
-    let result = [];
+  static allObjectsOfArrayWithProperty(array: Array<any>, key: any, value: any): Array<any> {
+    let result: Array<any> = [];
 
     for (let object of array) {
       if (object[key] == value) result.push(object);
@@ -17,9 +17,7 @@ class Util {
     return result;
   }
 
-  static randomNumber(min, max) {
-    return  Math.floor(Math.random() * (max - min + 1) ) + min
+  static randomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1) ) + min
   }
 }
-
-module.exports = Util;
