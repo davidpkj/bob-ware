@@ -1,9 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const multer = require("multer");
-const path = require("path");
-const log = require("./helpers/log_handler")
-const fs = require('fs');
+import { log } from "../helpers/log_handler";
+
+import { Router } from "express";
+import * as multer from "multer";
+import * as path from "path";
+import * as fs from "fs";
+
+const router = Router();
 
 // Generates suitable filename for Cloud // TODO: Move to backend util
 const optimizeFilename = (string) => {
@@ -51,7 +53,7 @@ router.get(["/cloud/:file"], (req, res) => {
   }
 
   if (!fs.existsSync("backend/cloud/content/")) {
-    fs.mkdir("backend/cloud/content/");
+    fs.mkdir("backend/cloud/content/", () => log);
     respond();
     return;
   }

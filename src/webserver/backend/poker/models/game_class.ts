@@ -1,5 +1,5 @@
 const log = require("../../../helpers/log_handler");
-const Player = require("../models/player_class");
+const Player = require("./player_class");
 const Util = require("../../../helpers/util");
 const fs = require("fs");
 
@@ -50,7 +50,7 @@ class Game {
   }
 
   startRound(gameStarting) {
-    const dealer = require("../models/dealer_class");
+    const dealer = require("./dealer_class");
     const players = this.currentPlayers;
     const smallBlind = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"));
     

@@ -16,7 +16,7 @@ const addElement = async (elem, cont, anch, clas, id, plem) => {
 const runCategory = async () => {
   switch (location.pathname.split("/")[1]) {
     case "faq":
-      import("../assets/data/faq-data.js").then((module) => {
+      import("../assets/data/faq-data.js.js").then((module) => {
         listenForSearch();
         panelCreate(module.faq).then(() => {
           if (document.querySelector("#list").childElementCount == 1) {
@@ -27,12 +27,12 @@ const runCategory = async () => {
       });
       break;
     case "explanation":
-      import("../assets/data/explanation-data.js").then((module) => {
+      import("../assets/data/explanation-data.js.js").then((module) => {
         contentCreate(module.explanation);
       });
       break;
     case "other":
-      import("../assets/data/other-data.js").then((module) => {
+      import("../assets/data/other-data.js.js").then((module) => {
         listenForSearch();
         panelCreate(module.module).then(() => {
           if (document.querySelector("#list").childElementCount == 1) {

@@ -24,7 +24,8 @@ app.set("view engine", "ejs");
 // TODO: Initialize cleaner
 // require("./helpers/clean_handler")();
 
-// Start server
 const port = 8000;
 
-server.listen(port, log(`info`, `Webserver`, `Webserver ist in Betrieb unter http://${ip.address()}:${port}/`));
+export const webserver = () => {
+    server.listen(port, log(`info`, `Webserver`, `Webserver ist in Betrieb unter http://${ip.address()}:${port}/`));
+}

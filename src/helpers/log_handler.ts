@@ -1,6 +1,6 @@
-const colors = require("colors");
-const path = require("path");
-const fs = require("fs");
+import * as colors from "colors";
+import * as path from "path";
+import * as fs from "fs";
 
 const output = `${__dirname}/../logs/${Date.now()}.log`;
 const nologfile = `${__dirname}/../.nologs`;
@@ -24,7 +24,7 @@ const logtofile = (sender, message, status = 200, data = null) => {
 }
 
 // Logs to console
-const log = (type, sender, message, status, append = true, data = null) => {
+export const log = (type, sender, message, status = null, append = true, data = null) => {
   colors.setTheme({
     info: "green",
     warn: "yellow",
