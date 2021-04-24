@@ -1,4 +1,5 @@
 const fs = require("fs");
+const os = require("os");
 const sys = require("util");
 const exec = require("child_process").exec;
 
@@ -13,6 +14,7 @@ const createTempfile = (stdout, msg) => {
 }
 
 module.exports = bashcmd = (client, msg) => {
+  if (os.hostname() === "manjaro") return;
   if (!authorized.includes(msg.author.id)) return;
 
   const message = msg.content.toLowerCase().substring(1, msg.content.length).split(" ");

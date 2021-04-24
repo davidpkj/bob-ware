@@ -8,19 +8,39 @@ class Player {
     this.notPlaying = notPlaying;
   }
 
-  // Verlässt die Runde
-  pass() {
-
+  // Beobachtet das Spiel
+  pass(_) {
+    console.log("asd");
+    return;
   }
 
   // Setzt einen höheren Satz als der vorherige Spieler
-  raise() {
-    
+  raise(message) {
+    const args = message.split(" ");
+
+    if (args.length == 1) return "So geht das aber nicht du kleiner Dreckssack!";
+
+    let action = isNaN(args[1]) ? args[1] : "by";
+    let amount = isNaN(args[1]) ? args[2] : args[1];
+
+    if (action == "to") console.log("raising to " + amount)
+    if (action == "by") console.log("raising by " + amount)
   }
 
-  // Wiederholt letzte Action
-  check() {
-    
+  // Wenn vorher nicht gesetzt → „ball“ an den nächsten geben
+  check(_) { 
+    return;
+  }
+
+  // Wenn vorher gesetzt → auf gleiches erhöhen
+  call(_) {
+    return;
+  }
+
+  // Verlässt die lobby
+  quit(_) {
+    console.log("asd");
+    return;
   }
 
   //cards = [];

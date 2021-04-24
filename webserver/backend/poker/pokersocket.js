@@ -8,6 +8,17 @@ const roundStarting = () => {
   io.emit("roundStarting", game.currentPlayers);
 }
 
+const routeMessage = (socket, message) => {
+  let messageObject = game.evaluateMessage(message, socket.id);
+
+  if (messageObject.system) {
+    socket.emit("appendMessage", messageObject);
+    return;
+  }
+
+  io.emit("appendMessage", messageObject);
+}
+
 module.exports = (pio) => {
   io = pio;
 
@@ -16,9 +27,7 @@ module.exports = (pio) => {
       let response = await game.join(name, socket.id, roundStarting);
       socket.emit("joinResponse", response);
 
-      socket.on("sendMessage", (msg) => {
-        io.emit("appendMessage", msg, game.getMessageSender(socket.id));
-      });
+      socket.on("sendMessage", (message) => {routeMessage(socket, message);});
     });
 
     socket.on("disconnect", () => {

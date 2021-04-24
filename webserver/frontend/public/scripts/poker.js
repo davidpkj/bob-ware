@@ -1,26 +1,9 @@
 const socket = io();
 let currentPlayers = [];
 
-socket.on("appendMessage", (msg, sender) => {
-  const p = document.createElement("p");
-  let spanStyle;
+// TODO: Einmal alles durchkommentieren
 
-  p.style.fontSize = "18px";
-  p.style.margin = "0px";
-  p.style.marginTop = "0.4em";
-
-  if (sender !== "System") {
-    spanStyle = "color: #c9c9c9"
-  } else {
-    p.style.color = "#ff2a2a  ";
-    spanStyle = "color: #ffffff";
-  }
-
-  let span = `<span style="${spanStyle}">${sender}: </span>`;
-  p.innerHTML = `${span} ${msg}`;
-  document.querySelector(".messages").appendChild(p);
-});
-
+//
 const sendUsername = () => {
   let name = usernameInput.value;
 
@@ -35,8 +18,10 @@ const sendUsername = () => {
   document.activeElement.blur();
 }
 
+//
 const usernameInput = document.querySelector("#username");
 
+//
 usernameInput.addEventListener("keydown", (event) => {
   if (event.key == "Enter") {
     event.preventDefault();
@@ -44,17 +29,37 @@ usernameInput.addEventListener("keydown", (event) => {
   }
 });
 
+//
 document.querySelector("#login").addEventListener("click", sendUsername);
 // document.querySelector("#logout").addEventListener("click", () => location.reload());
 
-socket.on("joinResponse", (response) => {
-  console.log(response);
-  if (response) {
-    /*
-    document.querySelector(".name").innerText = response.player.name;
-    document.querySelector(".chips").innerText = response.player.chips;
-    */
+// 
+document.querySelector("#chat-input").addEventListener("keydown", (event) => {
+  if (event.key == "Enter") {
+    event.preventDefault();
 
+    const input = document.querySelector("#chat-input");
+    socket.emit("sendMessage", input.value);
+    input.value = "";
+  }
+});
+
+// 
+socket.on("appendMessage", (messageObject) => {
+  const p1 = document.createElement("p");
+  p1.innerHTML = `${messageObject.sender}: <span class="${messageObject.type}">${messageObject.content}</span>`;
+  document.querySelector(".messages").appendChild(p1);
+
+  if (messageObject.system) {
+    const p2 = document.createElement("p");
+    p2.innerHTML = `Dealer: <span class="system">${messageObject.system}</span>`;
+    document.querySelector(".messages").appendChild(p2);
+  }
+});
+
+// 
+socket.on("joinResponse", (response) => {
+  if (response) {
     document.querySelector(".information-wrapper").remove();
     document.querySelector(".game").style.display = "flex";
   } else {
@@ -62,40 +67,7 @@ socket.on("joinResponse", (response) => {
   }
 });
 
-// TODO: @David was das? Kann das weg?
-socket.on("gamestatechange", (gamestate) => {
-  // if (gamestate.running) return; // spectate
-
-  document.querySelector(".time").innerText = gamestate.time;
-  document.querySelector(".readyCount").innerText = gamestate.readyCount;
-  document.querySelector(".playerCount").innerText = gamestate.playerCount;
-});
-
-document.querySelector("#chat-input").addEventListener("keydown", (event) => {
-  if (event.key == "Enter") {
-    event.preventDefault();
-    socket.emit("sendMessage", document.querySelector("#chat-input").value);
-    document.querySelector("#chat-input").value = "";
-  }
-});
-
-/* TODO: REMOVE DEV FUNC */
-let bool = true;
-function toggle () {
-  if (bool) {
-    document.querySelector(".game").style.display = "flex";
-    document.querySelector("h1").style.display = "none";
-    document.querySelector(".information-wrapper").style.display = "none";
-    bool = !bool;
-  } else { 
-    document.querySelector(".game").style.display = "none";
-    document.querySelector("h1").style.display = "block";
-    document.querySelector(".information-wrapper").style.display = "block";
-    bool = !bool;
-  }
-}
-
-// Fügt die Spielernamen in die playerList ein
+// Empfängt das Signal einer neuen Runde
 socket.on("roundStarting", (currentPlayers) => {
   renderPlayerList(currentPlayers);
 });

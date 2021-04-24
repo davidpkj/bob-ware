@@ -92,10 +92,21 @@ class Game {
     return {};
   }
 
-  getMessageSender(socketid) {
-    for (let player of this.currentPlayers) {
-      if (socketid == player.id) return player.name;
+  // Evaluiert die Nachricht eines Spielers in Bezug auf mögliche Befehle
+  evaluateMessage(message, socketid) {
+    const msg = message.toLowerCase().trim();
+    const commands = ["call", "check", "raise", "pass", "quit"];
+    let player = Util.objectOfArrayWithProperty(this.currentPlayers, "id", socketid);
+    let type = "chit";
+    let response;
+
+    if (commands.includes(msg.split(" ")[0])) {
+      type = "command";
+      console.log(msg.split(" "));
+      response = player[msg.split(" ")[0]](msg);
     }
+
+    return {sender: player.name, content: message, type: type, system: response};
   }
 
   // Tritt dem System bei außer Spiel Läuft
@@ -108,7 +119,7 @@ class Game {
     this.currentPlayers.push(player);
     this.tryGameStart(gameStarting);
 
-    log("info", "Poker System", `Ein Client ist dem System beigetreten (Name: ${name})`);
+    log("info", "Poker System", `Ein Client ist dem System beigetreten (Name: ${name} | ID: ${socketid})`);
 
     return {"player": player};
   }
@@ -122,12 +133,6 @@ class Game {
         log("info", "Poker System", `Ein Client hat das System verlassen (Name: ${players[index].name} | ID: ${socketid})`);
         players.splice(index);
       }
-    }
-  }
-
-  preflop() {
-    for (let player of this.currentPlayers) {
-      Cards
     }
   }
 }

@@ -4,9 +4,12 @@ const log = require("../../helpers/log_handler");
 let users = [];
 
 const getCloudFiles = (userid) => {
+  const contentDir = `${__dirname}/content/`;
   let array = [];
 
-  fs.readdirSync(__dirname + "/content/").forEach((file) => {
+  if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir);
+
+  fs.readdirSync(contentDir).forEach((file) => {
     array.push(file);
   });
 
