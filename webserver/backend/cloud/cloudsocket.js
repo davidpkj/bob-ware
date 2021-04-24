@@ -24,6 +24,7 @@ module.exports = (io) => {
     });
 
     socket.on("disconnect", () => {
+      log("info", "Cloud System", `Ein Client hat das System verlassen (ID: ${socket.id})`);
       users.splice(users.indexOf(socket.id), 1);
     });
   });

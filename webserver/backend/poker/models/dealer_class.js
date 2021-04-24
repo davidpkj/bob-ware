@@ -32,8 +32,7 @@ class Dealer {
     let index = Util.randomNumber(0, this.cards.length - 1);
     let card = this.cards[index];
 
-    this.cards.splice(index);
-
+    this.cards.splice(index, 1);
     return card;
   }
 

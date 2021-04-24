@@ -21,7 +21,7 @@ class Game {
       return false;
     }
 
-    let time = 5;
+    let time = 30;
 
     interval = setInterval(() => {
       if (players.length < 2 || time == 0) {
@@ -41,15 +41,50 @@ class Game {
     }, 1000);
   }
 
-  // Startet ein Spiel KEINE RUNDE // TODO: Rename
+  // Startet ein Spiel KEINE RUNDE
   startGame(gameStarting) {
-    const dealer = require("../models/dealer_class");
-    this.setBlinds();
+    log("info", "Poker System", "Eine Runde Poker beginnt");
 
     // TODO: IMPLEMENT ROUNDS
-    log("info", "Poker System", "Eine Runde Poker beginnt");
-    gameStarting();
+    this.startRound(gameStarting);
   }
+
+  startRound(gameStarting) {
+    const dealer = require("../models/dealer_class");
+    const players = this.currentPlayers;
+    const smallBlind = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"));
+    
+    // Erste Phase des Spiels
+    const preflop = (startAt) => {
+      for (let i = 0; i < 2; i++) {
+        let startIndex = startAt;
+
+        for (let k = 0; k < players.length; k++) {
+          if (startIndex + k >= players.length) startIndex = 0 - k;
+          
+          let dealed = dealer.deal();
+          Player.cards.push(dealed);
+          gameStarting(players[startIndex+k].id, dealed);
+        }
+      }
+    };
+
+    // TODO: Blindsystem ausdenken
+    this.setBlinds();
+    // Rendert die Spielernamen und zeigt die ersten Blinds an
+    gameStarting();
+
+    // Gibt jedem Spieler die ersten 2 Karten, bei 2 Spielern bekommt BB die erste und nicht SB
+    if (players.length > 2) {
+      preflop(smallBlind);
+    } else {
+      if (smallBlind == 0) {
+        preflop(1);
+      } else {
+        preflop(0);
+      }
+    }
+  } 
 
   // Setzt die Blinds für die Spieler
   setBlinds() {
@@ -58,7 +93,7 @@ class Game {
 
     const loopBlinds = (startIndex) => {
       for (let i = 0; i < 3; i++) {
-        if (i == 0 && players == 2) continue;
+        if (i == 0 && players.length == 2) continue;
         if (startIndex + i == players.length) startIndex = 0 - i;
 
         players[startIndex + i].blind = blinds[i];
@@ -70,7 +105,7 @@ class Game {
 
       loopBlinds(random);
     } else {
-      let target = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"))
+      let target = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"));
 
       for (let player of players) {
         player.blind = "";
@@ -125,11 +160,6 @@ class Game {
     }
   }
 
-  preflop() {
-    for (let player of this.currentPlayers) {
-      Cards
-    }
-  }
 }
 
 module.exports = new Game();
