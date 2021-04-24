@@ -7,6 +7,7 @@ export class Player {
   cards: Array<Card>;
   blind: string;
   notPlaying: boolean;
+
   constructor(id: string, name: string, chips: number = 5000, cards: Array<Card> = [], blind: string = "", notPlaying: boolean = false) {
     this.id = id;
     this.name = name;

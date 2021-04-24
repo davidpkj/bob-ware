@@ -8,7 +8,7 @@ import * as fs from "fs";
 const router = Router();
 
 // Generates suitable filename for Cloud // TODO: Move to backend util
-const optimizeFilename = (string) => {
+const optimizeFilename = (string: string) => {
   string.replace(/ /g, "_");
 
   const date = new Date().toISOString().split("T")[0];

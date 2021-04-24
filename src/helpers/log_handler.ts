@@ -31,6 +31,7 @@ export const log = (type: string, sender: string, message: string, status: numbe
     error: "red"
   });
 
+  // @ts-ignore
   console.log(`[ ${sender.toString()[type]} ] [ ${new Date().toLocaleString().grey} ] ` + (status ? `[ ${status.toString()[type]} ] ${message}` : message.toString()));
 
   if (append) logtofile(sender, message, status, data);

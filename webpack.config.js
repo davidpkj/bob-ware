@@ -19,4 +19,5 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
+  target: "node", // Or "async-node"
 };

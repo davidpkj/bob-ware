@@ -32,15 +32,15 @@ const routeMessage = (socket: any, message: string): void => {
   io.emit("appendMessage", messageObject);
 }
 
-module.exports = (pio) => {
+module.exports = (pio: any) => {
   io = pio;
 
-  io.on("connection", (socket) => {
-    socket.on("joinRequest", async (name) => {
+  io.on("connection", (socket: any) => {
+    socket.on("joinRequest", async (name: string) => {
       let response = await game.join(name, socket.id, roundStarting);
       socket.emit("joinResponse", response);
 
-      socket.on("sendMessage", (message) => {routeMessage(socket, message);});
+      socket.on("sendMessage", (message: string) => {routeMessage(socket, message);});
     });
 
     socket.on("disconnect", () => {

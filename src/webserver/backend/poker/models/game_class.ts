@@ -141,13 +141,16 @@ export class Game {
     if (commands.includes(msg.split(" ")[0])) {
       type = "command";
       console.log(msg.split(" "));
-      response = player[msg.split(" ")[0]](msg);
+      const cmdray: Array<string> = msg.split(" ");
+      const cmd: string = cmdray[0];
+      // @ts-ignore
+      if (player[cmd]) response = player[cmd](msg);
     }
 
     return {sender: player.name, content: message, type: type, system: response};
   }
 
-  // FIXME: @return type
+  // FIXME: return type
   // Tritt dem System bei außer Spiel Läuft
   async join(name: string, socketid: string, gameStarting: Function) {
     // for (let player of this.currentPlayers || this.running) {
