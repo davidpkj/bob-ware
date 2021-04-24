@@ -1,6 +1,8 @@
-const socket = io();
+import socketio from "socket.io-client";
 
-const createFileAnchor = (url) => {
+const socket = socketio();
+
+const createFileAnchor = (url: string): void => {
   const a = document.createElement("a");
   a.href = `cloud/${url}`;
   a.innerText = url;
@@ -8,7 +10,7 @@ const createFileAnchor = (url) => {
   document.querySelector(".list").appendChild(a);
 }
 
-socket.on("cloudDataResponse", (data) => {
+socket.on("cloudDataResponse", (data: Array<string>): void => {
   document.querySelector(".list").innerHTML = "";
 
   if (data) {
@@ -18,13 +20,13 @@ socket.on("cloudDataResponse", (data) => {
   }
 });
 
-const input = document.querySelector("input");
+const input: HTMLInputElement = document.querySelector("input");
 
 input.addEventListener("change", async (_) => {
   if (input.files.length == 0) return;
 
-  let file = input.files[0];
-  let formData = new FormData();
+  let file: File = input.files[0];
+  let formData: FormData = new FormData();
 
   formData.append("file", file);
 

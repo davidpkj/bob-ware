@@ -4,6 +4,7 @@
     "module": "es6",
     "target": "es5",
     "baseUrl": "./src/",
+    "noImplicitAny": true,
     "moduleResolution": "node",
     "typeRoots": [
       "./node_modules/@types"

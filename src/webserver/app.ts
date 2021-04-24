@@ -1,10 +1,10 @@
-const ip = require("ip");
-const path = require("path");
-const log = require("./helpers/log_handler");
-const express = require("express");
-const app = express();
+import * as ip from "ip";
+import * as path from "path";
+import * as express from "express";
 
-// Initialize router
+import { log } from "../helpers/log_handler";
+
+const app = express();
 const router = require("./router");
 
 app.use("/", express.static(__dirname + "/frontend/public"));

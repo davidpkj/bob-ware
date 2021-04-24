@@ -1,11 +1,12 @@
-const fs = require("fs");
-const log = require("../../helpers/log_handler");
+import * as fs from "fs";
 
-let users = [];
+import { log } from "../../../helpers/log_handler";
 
-const getCloudFiles = (userid) => {
-  const contentDir = `${__dirname}/content/`;
-  let array = [];
+let users: Array<string> = [];
+
+const getCloudFiles = (userid: string): Array<string> => {
+  const contentDir = `${__dirname}/data/`;
+  let array: Array<string> = [];
 
   if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir);
 
@@ -18,15 +19,15 @@ const getCloudFiles = (userid) => {
   return array;
 }
 
-module.exports = (io) => {
-  io.on("connection", (socket) => {
+module.exports = (io: any) => {
+  io.on("connection", (socket: any): void => {
     users.push(socket.id);
 
-    socket.on("cloudDataRequest", () => {
+    socket.on("cloudDataRequest", (): void => {
       socket.emit("cloudDataResponse", getCloudFiles(socket.id));
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", (): void => {
       log("info", "Cloud System", `Ein Client hat das System verlassen (ID: ${socket.id})`);
       users.splice(users.indexOf(socket.id), 1);
     });
