@@ -72,6 +72,17 @@ socket.on("roundStarting", (currentPlayers) => {
   renderPlayerList(currentPlayers);
 });
 
+// Zeigt die ersten beiden Karten
+socket.on("preflop", (card) => {
+  let hand = document.querySelectorAll(".hand > .card");
+
+  if (hand[0].src == "http://localhost:1337/assets/poker/cards/default.png") {
+    hand[0].src = `http://localhost:1337/assets/poker/cards/${card.suit}${card.number}.png`;
+  } else {
+    hand[1].src = `http://localhost:1337/assets/poker/cards/${card.suit}${card.number}.png`;
+  }
+});
+
 // Schreibt die Blinds, Spielernamen und Chips in die Liste
 const renderPlayerList = (players) => {
   const elements = document.getElementsByClassName("player");

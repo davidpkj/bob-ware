@@ -4,8 +4,19 @@ const game = require("./models/game_class");
 
 let io; 
 
-const roundStarting = () => {
-  io.emit("roundStarting", game.currentPlayers);
+const roundStarting = (id, card) => {
+  // Symbolisiert auf Clienstite, dass die Runde startet
+  if (!card) {
+    io.emit("roundStarting", game.currentPlayers);
+    return
+  }
+  // Zeigt Clientsite die ersten 2 Karten an
+  if (id) {
+    io.to(id).emit('preflop', card);
+    return
+  }
+  // Zeigt Clientsite die nächste Karte vom Tisch an
+  io.emit("nextCard", card); // Implement on Client
 }
 
 const routeMessage = (socket, message) => {
