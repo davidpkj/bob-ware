@@ -29,7 +29,7 @@ export const log = (type: string, sender: string, message: string, status: numbe
     info: "green",
     warn: "yellow",
     error: "red"
-  })
+  });
 
   console.log(`[ ${sender.toString()[type]} ] [ ${new Date().toLocaleString().grey} ] ` + (status ? `[ ${status.toString()[type]} ] ${message}` : message.toString()));
 

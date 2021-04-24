@@ -1,9 +1,10 @@
-const Util = require("../../../helpers/util");
+import { Util } from "../../../../helpers/util";
+import { Card } from "./card_class";
 
 const numbers = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 const suits = ["clubs", "diamonds", "hearts", "spades"];
 
-const generateAllCards = () => {
+const generateAllCards = (): Array<Card> => {
   let result = [];
 
   for (let suit of suits) {
@@ -15,20 +16,16 @@ const generateAllCards = () => {
   return result;
 }
 
-class Card {
-  constructor(suit, number) {
-    this.suit = suit;
-    this.number = number;
-  }
-}
-
-class Dealer {
-  constructor(cards = generateAllCards(), table = []) {
+export class Dealer {
+  cards: Array<Card>;
+  table: Array<Card>;
+  constructor(cards = generateAllCards(), table: Array<Card> = []) {
     this.cards = cards;
     this.table = table;
   }
-  
-  deal() {
+ 
+  // FIXME: Splice evtl. ein Index zu hoch
+  deal(): Card {
     let index = Util.randomNumber(0, this.cards.length - 1);
     let card = this.cards[index];
 
@@ -36,7 +33,7 @@ class Dealer {
     return card;
   }
 
-  dealToTable() {
+  dealToTable(): void {
     this.table.push(this.deal());
   }
 }
@@ -48,5 +45,3 @@ class Dealer {
   turn
   river
 */
-
-module.exports = new Dealer();

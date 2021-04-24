@@ -1,5 +1,13 @@
-class Player {
-  constructor(id, name, chips = 5000, cards = [], blind = "", notPlaying = false) {
+import { Card } from "./card_class";
+
+export class Player {
+  id: string;
+  name: string;
+  chips: number;
+  cards: Array<Card>;
+  blind: string;
+  notPlaying: boolean;
+  constructor(id: string, name: string, chips: number = 5000, cards: Array<Card> = [], blind: string = "", notPlaying: boolean = false) {
     this.id = id;
     this.name = name;
     this.chips = chips;
@@ -9,36 +17,37 @@ class Player {
   }
 
   // Beobachtet das Spiel
-  pass(_) {
+  pass(_: any) {
     console.log("asd");
     return;
   }
 
+  // TODO: @davidpkj: FIX IT
   // Setzt einen höheren Satz als der vorherige Spieler
-  raise(message) {
-    const args = message.split(" ");
+  raise(message: string): string {
+    const args: Array<string> = message.split(" ");
 
     if (args.length == 1) return "So geht das aber nicht du kleiner Dreckssack!";
 
-    let action = isNaN(args[1]) ? args[1] : "by";
-    let amount = isNaN(args[1]) ? args[2] : args[1];
+    let action: string = isNaN(parseInt(args[1])) ? args[1] : "by";
+    let amount: number = isNaN(parseInt(args[1])) ? parseInt(args[2]) : parseInt(args[1]);
 
     if (action == "to") console.log("raising to " + amount)
     if (action == "by") console.log("raising by " + amount)
   }
 
   // Wenn vorher nicht gesetzt → „ball“ an den nächsten geben
-  check(_) { 
+  check(_: any) { 
     return;
   }
 
   // Wenn vorher gesetzt → auf gleiches erhöhen
-  call(_) {
+  call(_: any) {
     return;
   }
 
   // Verlässt die lobby
-  quit(_) {
+  quit(_: any) {
     console.log("asd");
     return;
   }
@@ -215,5 +224,3 @@ class Player {
     return [1, highCard()];
   } */
 }
-
-module.exports = Player;

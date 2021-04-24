@@ -1,10 +1,12 @@
-const log = require("../../helpers/log_handler");
-const Util = require("../../helpers/util");
-const game = require("./models/game_class");
+import { log } from "../../../helpers/log_handler";
+import { Util } from "../../../helpers/util";
+import { Game } from "./models/game_class";
+import { Card } from "./models/card_class";
 
-let io; 
+const game: Game = new Game();
+let io: any;
 
-const roundStarting = (id, card) => {
+const roundStarting = (id: string, card: Card): void => {
   // Symbolisiert auf Clienstite, dass die Runde startet
   if (!card) {
     io.emit("roundStarting", game.currentPlayers);
@@ -19,8 +21,8 @@ const roundStarting = (id, card) => {
   io.emit("nextCard", card); // Implement on Client
 }
 
-const routeMessage = (socket, message) => {
-  let messageObject = game.evaluateMessage(message, socket.id);
+const routeMessage = (socket: any, message: string): void => {
+  let messageObject: any = game.evaluateMessage(message, socket.id);
 
   if (messageObject.system) {
     socket.emit("appendMessage", messageObject);

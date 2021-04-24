@@ -1,27 +1,28 @@
-const log = require("../../../helpers/log_handler");
-const Player = require("./player_class");
-const Util = require("../../../helpers/util");
-const fs = require("fs");
+import { log } from "../../../../helpers/log_handler";
+import { Player } from "./player_class";
+import { Dealer } from "./dealer_class";
+import { Card } from "./card_class";
+import { Util } from "../../../../helpers/util";
+import * as fs from "fs";
 
-let interval;
+let interval: NodeJS.Timeout;
 
-class Game {
-  running = false;
-  tableCards = [];
-  currentPlayers = [];
-  lastBet = 0;
-  pot = 0;
+export class Game {
+  running: boolean = false;
+  currentPlayers: Array<Player> = [];
+  lastBet: number = 0;
+  pot: number = 0;
 
   // Versucht eine Runde zu starten (gibt true bei Erfolg aus)
-  async tryGameStart(gameStarting) {
-    const players = this.currentPlayers;
+  async tryGameStart(gameStarting: Function) {
+    const players: Array<Player> = this.currentPlayers;
 
     if (this.running == true || players.length > 8 || players.length < 2 || interval != null) {
       log(`warn`, `Poker System`, `Poker kann nicht starten (running: ${this.running}, players: ${players.length}, counting: ${interval ? true : false})`);
       return false;
     }
 
-    let time = 30;
+    let time: number = 30;
 
     interval = setInterval(() => {
       if (players.length < 2 || time == 0) {
@@ -42,28 +43,28 @@ class Game {
   }
 
   // Startet ein Spiel KEINE RUNDE
-  startGame(gameStarting) {
+  startGame(gameStarting: Function) {
     log("info", "Poker System", "Eine Runde Poker beginnt");
 
     // TODO: IMPLEMENT ROUNDS
     this.startRound(gameStarting);
   }
 
-  startRound(gameStarting) {
-    const dealer = require("./dealer_class");
-    const players = this.currentPlayers;
-    const smallBlind = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"));
-    
+  startRound(gameStarting: Function) {
+    const players: Array<Player> = this.currentPlayers;
+    const smallBlind: number = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"));
+    let dealer: Dealer = new Dealer();
+
     // Erste Phase des Spiels
-    const preflop = (startAt) => {
+    const preflop = (startAt: number) => {
       for (let i = 0; i < 2; i++) {
-        let startIndex = startAt;
+        let startIndex: number = startAt;
 
         for (let k = 0; k < players.length; k++) {
           if (startIndex + k >= players.length) startIndex = 0 - k;
           
-          let dealed = dealer.deal();
-          Player.cards.push(dealed);
+          let dealed: Card = dealer.deal();
+          this.currentPlayers[startIndex+k].cards.push(dealed);
           gameStarting(players[startIndex+k].id, dealed);
         }
       }
@@ -88,10 +89,10 @@ class Game {
 
   // Setzt die Blinds für die Spieler
   setBlinds() {
-    const blinds = ["Dealer", "Small Blind", "Big Blind"];
-    const players = this.currentPlayers;
+    const blinds: Array<string> = ["Dealer", "Small Blind", "Big Blind"];
+    const players: Array<Player> = this.currentPlayers;
 
-    const loopBlinds = (startIndex) => {
+    const loopBlinds = (startIndex: number): void => {
       for (let i = 0; i < 3; i++) {
         if (i == 0 && players.length == 2) continue;
         if (startIndex + i == players.length) startIndex = 0 - i;
@@ -101,11 +102,11 @@ class Game {
     }
 
     if (Util.allObjectsOfArrayWithProperty(players, "blind", "").length == players.length) {
-      let random = Util.randomNumber(0, players.length);
+      let random: number = Util.randomNumber(0, players.length);
 
       loopBlinds(random);
     } else {
-      let target = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"));
+      let target: number = players.indexOf(Util.objectOfArrayWithProperty(players, "blind", "Small Blind"));
 
       for (let player of players) {
         player.blind = "";
@@ -115,10 +116,11 @@ class Game {
     }
   }
 
+  // TODO: Fix Type of json 
   // Liest mögliche Spielerinformation aus
-  getUserData(name) {
-    const userlist = `${__dirname}/../data/userlist.json`;
-    const json = JSON.parse(fs.readFileSync(userlist, {encoding: "utf-8"}));
+  getUserData(name: string): any {
+    const userlist: string = `${__dirname}/../data/userlist.json`;
+    const json: any = JSON.parse(fs.readFileSync(userlist, {encoding: "utf-8"}));
 
     for (let player of json) {
       if (player.name == name) return player;
@@ -127,13 +129,14 @@ class Game {
     return {};
   }
 
+  // FIXME:
   // Evaluiert die Nachricht eines Spielers in Bezug auf mögliche Befehle
-  evaluateMessage(message, socketid) {
-    const msg = message.toLowerCase().trim();
-    const commands = ["call", "check", "raise", "pass", "quit"];
-    let player = Util.objectOfArrayWithProperty(this.currentPlayers, "id", socketid);
-    let type = "chit";
-    let response;
+  evaluateMessage(message: string, socketid: string): any {
+    const msg: string = message.toLowerCase().trim();
+    const commands: Array<string> = ["call", "check", "raise", "pass", "quit"];
+    let player: Player = Util.objectOfArrayWithProperty(this.currentPlayers, "id", socketid);
+    let type: string = "chit";
+    let response: string;
 
     if (commands.includes(msg.split(" ")[0])) {
       type = "command";
@@ -144,13 +147,15 @@ class Game {
     return {sender: player.name, content: message, type: type, system: response};
   }
 
+  // FIXME: @return type
   // Tritt dem System bei außer Spiel Läuft
-  async join(name, socketid, gameStarting) {
-    for (let player of this.currentPlayers || this.running) {
+  async join(name: string, socketid: string, gameStarting: Function) {
+    // for (let player of this.currentPlayers || this.running) {
+    for (let player of this.currentPlayers) {
       if (player.name == name) return false;
     }
 
-    let player = new Player(socketid, name, this.getUserData(name).chips);
+    let player: Player = new Player(socketid, name, this.getUserData(name).chips);
     this.currentPlayers.push(player);
     this.tryGameStart(gameStarting);
 
@@ -160,16 +165,14 @@ class Game {
   }
 
   // Verlassen des Systems
-  leave(socketid) {
-    const players = this.currentPlayers;
+  leave(socketid: string): void {
+    const players: Array<Player> = this.currentPlayers;
 
     for (let index in players) {
       if (players[index].id == socketid) {
         log("info", "Poker System", `Ein Client hat das System verlassen (Name: ${players[index].name} | ID: ${socketid})`);
-        players.splice(index);
+        players.splice(parseInt(index));
       }
     }
   }
 }
-
-module.exports = new Game();
