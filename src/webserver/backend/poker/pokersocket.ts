@@ -32,7 +32,7 @@ const routeMessage = (socket: any, message: string): void => {
   io.emit("appendMessage", messageObject);
 }
 
-module.exports = (pio: any) => {
+export const pokersocket = (pio: any) => {
   io = pio;
 
   io.on("connection", (socket: any) => {

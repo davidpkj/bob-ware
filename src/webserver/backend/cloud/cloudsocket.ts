@@ -19,7 +19,7 @@ const getCloudFiles = (userid: string): Array<string> => {
   return array;
 }
 
-module.exports = (io: any) => {
+export const cloudsocket = (io: any) => {
   io.on("connection", (socket: any): void => {
     users.push(socket.id);
 

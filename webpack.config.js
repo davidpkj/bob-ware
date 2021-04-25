@@ -1,23 +1,56 @@
 const path = require("path");
 
-module.exports = {
-  mode: "development",
-  entry: "./src/index.ts",
-  output: {
-    filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
-  },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
+const mode = "development";
+
+const moduleRules = {
+  rules: [
+    {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/,
+    },
+  ],
+};
+
+const resolveExtensions = {
+  extensions: ['.tsx', '.ts', '.js'],
+};
+
+const backendConfig = {
+  mode: mode,
+  entry: {
+    app: [
+      "./src/app.ts",
     ],
   },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "dist/"),
   },
-  target: "node", // Or "async-node"
+  resolve: resolveExtensions,
+  module: moduleRules,
+  target: "node",
 };
+
+const frontendConfig = {
+  mode: mode,
+  entry: {
+    cloud: [
+      "./src/webserver/frontend/cloud.ts",
+    ],
+    poker: [
+      "./src/webserver/frontend/poker.ts",
+    ],
+  },
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "public/scripts/"),
+  },
+  resolve: resolveExtensions,
+  module: moduleRules,
+  target: "web",
+};
+
+module.exports = [
+  backendConfig, frontendConfig
+];

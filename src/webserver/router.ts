@@ -5,7 +5,9 @@ import * as multer from "multer";
 import * as path from "path";
 import * as fs from "fs";
 
-const router = Router();
+export const router = Router();
+
+const cloudDataDirectory = path.join(__dirname, "../data/cloud/content/");
 
 // Generates suitable filename for Cloud // TODO: Move to backend util
 const optimizeFilename = (string: string) => {
@@ -19,14 +21,14 @@ const optimizeFilename = (string: string) => {
 // Saves files to disk // TODO: Move to backend util
 const diskStorage = multer.diskStorage({
   destination: (_, __, cb) => {
-    cb(null, "backend/cloud/content/");
+    cb(null, cloudDataDirectory);
   },
   filename: (_, file, cb) => {
     cb(null, optimizeFilename(file.originalname));
   }
 });
 
-const htmlpath = `${__dirname}/frontend/views/`;
+const htmlpath = path.join(__dirname, "../public/views/");
 
 // Dashboard
 router.get(["/", "/dashboard"], (_, res) => {
@@ -52,13 +54,13 @@ router.get(["/cloud/:file"], (req, res) => {
     log("error", "Cloud System", "Download ist fehlgeschlagen", code);
   }
 
-  if (!fs.existsSync("backend/cloud/content/")) {
-    fs.mkdir("backend/cloud/content/", () => log);
+  if (!fs.existsSync(cloudDataDirectory)) {
+    fs.mkdir(cloudDataDirectory, () => log);
     respond();
     return;
   }
 
-  res.download(path.join(__dirname, `/backend/cloud/content/${req.params["file"]}`), (error) => {    
+  res.download(path.join(__dirname, `${cloudDataDirectory}${req.params["file"]}`), (error) => {    
     if (error) {
       respond();
     } else {
@@ -76,5 +78,3 @@ router.post("/cloud/upload", multer({storage: diskStorage}).single("file"), (_, 
 router.get("*", (_, res) => {
   res.status(404).render(`${htmlpath}/error.ejs`, {code: 404});
 });
-
-module.exports = router;
