@@ -1,22 +1,16 @@
-import { log } from "../helpers/log_handler";
-
-import { Router } from "express";
-import * as multer from "multer";
-import * as path from "path";
 import * as fs from "fs";
+import * as path from "path";
+import * as multer from "multer";
+import { Router } from "express";
+
+import { Util } from "../helpers/util";
+import { log } from "../helpers/log_handler";
+import * as constants from "../helpers/constants";
 
 export const router = Router();
 
-const cloudDataDirectory = path.join(__dirname, "../data/cloud/content/");
-
-// Generates suitable filename for Cloud // TODO: Move to backend util
-const optimizeFilename = (string: string) => {
-  string.replace(/ /g, "_");
-
-  const date = new Date().toISOString().split("T")[0];
-
-  return `${date}-${string}`;
-}
+const cloudDataDirectory = constants.paths.cloudDataDirectory;
+const htmlpath = constants.paths.viewsDirectory;
 
 // Saves files to disk // TODO: Move to backend util
 const diskStorage = multer.diskStorage({
@@ -24,11 +18,9 @@ const diskStorage = multer.diskStorage({
     cb(null, cloudDataDirectory);
   },
   filename: (_, file, cb) => {
-    cb(null, optimizeFilename(file.originalname));
+    cb(null, Util.sanetizeString(file.originalname, true));
   }
 });
-
-const htmlpath = path.join(__dirname, "../public/views/");
 
 // Dashboard
 router.get(["/", "/dashboard"], (_, res) => {
@@ -50,7 +42,7 @@ router.get(["/cloud/:file"], (req, res) => {
   const respond = () => {
     const code = 500;
 
-    res.status(code).render(`${htmlpath}/error.ejs`, {code: code});
+    res.status(code).sendFile(`${htmlpath}/error.html`);
     log("error", "Cloud System", "Download ist fehlgeschlagen", code);
   }
 
@@ -60,7 +52,7 @@ router.get(["/cloud/:file"], (req, res) => {
     return;
   }
 
-  res.download(path.join(__dirname, `${cloudDataDirectory}${req.params["file"]}`), (error) => {    
+  res.download(`${cloudDataDirectory}/${req.params["file"]}`, (error) => {    
     if (error) {
       respond();
     } else {
@@ -76,5 +68,5 @@ router.post("/cloud/upload", multer({storage: diskStorage}).single("file"), (_, 
 
 // 404
 router.get("*", (_, res) => {
-  res.status(404).render(`${htmlpath}/error.ejs`, {code: 404});
+  res.status(404).sendFile(`${htmlpath}/error.html`);
 });

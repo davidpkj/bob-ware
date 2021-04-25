@@ -1,11 +1,12 @@
 import * as fs from "fs";
 
 import { log } from "../../../helpers/log_handler";
+import * as constants from "../../../helpers/constants";
 
 let users: Array<string> = [];
 
 const getCloudFiles = (userid: string): Array<string> => {
-  const contentDir = `${__dirname}/data/`;
+  const contentDir = constants.paths.cloudDataDirectory;
   let array: Array<string> = [];
 
   if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir);

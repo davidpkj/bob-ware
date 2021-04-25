@@ -14,7 +14,7 @@ const sendUsername = (): void => {
 
   if (name) {
     name = name.trim();
-    name = name.replace(/[\!\"\§\$\%\&\/\\\(\)\=\?\}\]\[\{\<\>\|\.\,\;\:\_\@\~\'\+\*]/g, "");
+    name = name.replace(/[^a-zA-Z0-9ßüäö\-\ ]/g, "");
 
     if (name != "") socket.emit("joinRequest", name);
   }
