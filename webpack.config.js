@@ -41,6 +41,9 @@ const frontendConfig = {
     poker: [
       "./src/webserver/frontend/poker.ts",
     ],
+    dashboard: [
+      "./src/webserver/frontend/dashboard.ts",
+    ],
   },
   output: {
     filename: "[name].js",
