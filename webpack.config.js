@@ -5,15 +5,19 @@ const mode = "development";
 const moduleRules = {
   rules: [
     {
-      test: /\.tsx?$/,
-      use: 'ts-loader',
+      test: /(\.js?$)|(\.tsx?$)|(\.ts?$)/,
+      use: "ts-loader",
       exclude: /node_modules/,
+    },
+    { 
+      test: /\.env$/,
+      use: "raw-loader", 
     },
   ],
 };
 
 const resolveExtensions = {
-  extensions: ['.tsx', '.ts', '.js'],
+  extensions: [".tsx", ".ts", ".js"],
 };
 
 const backendConfig = {

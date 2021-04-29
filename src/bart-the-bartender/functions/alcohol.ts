@@ -1,4 +1,6 @@
-const sortiment = {
+import * as Discord from "discord.js";
+
+export const sortiment: any = {
   "shot": "Kommt sofort!",
   "martini": "Möchten Sie ihn geschüttelt oder gerührt?",
   "whiskey": "Was darf es sein? Ein irischer Single Malt, Tennessee, Bourbon oder doch Scotch?",
@@ -11,6 +13,6 @@ const sortiment = {
   "drinks": "Ich kann hiermit dienen: Martini, Whiskey, Gin, Vodka, Rum, Wein, Coacktail und einem Shot",
 }
 
-module.exports = alcohol = (_, msg) => {
+export const serve = (_: any, msg: Discord.Message) => {
   msg.reply(sortiment[msg.content.toLowerCase().substring(1, msg.content.length)]);
 }

@@ -1,19 +1,20 @@
-const fs = require("fs");
-const os = require("os");
-const sys = require("util");
-const exec = require("child_process").exec;
+import * as os from "os";
+import { exec } from "child_process";
+import * as Discord from "discord.js";
 
 const authorized = ["322769681079336972", "441975703135846401", "500574701652017164"];
 
-const createTempfile = (stdout, msg) => {
-  const tempfile = `/tmp/${Date.now()}-output.txt`;
+const createTempfile = (stdout: string, msg: Discord.Message) => {
+  const buffer = Buffer.alloc(stdout.length);
 
-  fs.writeFileSync(tempfile, stdout);
-  msg.reply("der Output ist zu lang, aber hier nimm das:", { files: [tempfile] });
-  fs.unlinkSync(tempfile);
+  buffer.write(stdout, "utf-8");
+
+  const attachment = new Discord.MessageAttachment(buffer);
+
+  msg.reply("Der Output ist zu lang, aber hier nimm das:", attachment);
 }
 
-module.exports = bashcmd = (client, msg) => {
+export const bashcmd = (client: Discord.Client, msg: Discord.Message) => {
   if (os.hostname() === "manjaro") return;
   if (!authorized.includes(msg.author.id)) return;
 
@@ -22,7 +23,7 @@ module.exports = bashcmd = (client, msg) => {
   message.shift();
   client.user.setPresence({ status: "idle" });
 
-  command = exec(message.join(" "), (error, stdout, _) => {
+  exec(message.join(" "), (error, stdout, _) => {
     let answer = error ? `${error.code}\n${error.message}` : `0\n${stdout}`;
 
     try {

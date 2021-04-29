@@ -1,11 +1,12 @@
-const ytdl = require("ytdl-core");
+import * as ytdl from "ytdl-core";
+import * as Discord from "discord.js";
 
-let queue = [];
-let connection, dispatcher, audiostream, percent;
+let queue: Array<any> = [];
+let connection: Discord.VoiceConnection, dispatcher: Discord.BroadcastDispatcher, audiostream: any;
 
 const stream = () => {
   if (queue.length == 0) {
-    stop();
+    stop(null, null);
     return;
   }
 
@@ -18,12 +19,12 @@ const stream = () => {
     if (queue[0]) {
       stream();
     } else {
-      stop();
+      stop(null, null);
     }
   });
 }
 
-const play = async (_, msg) => {
+const play = async (_: any, msg: Discord.Message) => {
   const args = msg.content.substring(1).split(" ");
 
   if (!args[1]) {
@@ -42,29 +43,29 @@ const play = async (_, msg) => {
   if (!dispatcher) stream();
 }
 
-const stop = (_, __) => {
+const stop = (_: any, __: any) => {
   connection.disconnect();
   connection = null;
 }
 
-const pause = (_, __) => {
+const pause = (_: any, __: any) => {
   dispatcher.pause();
 }
 
-const resume = (_, __) => {
+const resume = (_: any, __: any) => {
   dispatcher.resume();
 }
 
-const skip = (_, __) => {
+const skip = (_: any, __: any) => {
   queue.shift();
   stream();
 }
 
-const nowplaying = (_, msg) => {
+const nowplaying = (_: any, msg: Discord.Message) => {
   msg.reply("Am arsch");
 }
 
-module.exports = {
+export const controls = {
   "play": play,
   "stop": stop,
   "pause": pause,
