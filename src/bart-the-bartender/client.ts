@@ -1,6 +1,6 @@
 import * as Discord from "discord.js";
 
-import { log } from "helpers/log_handler";
+import { log } from "../helpers/log_handler";
 import { controls } from "./functions/audio";
 import { bashcmd } from "./functions/bashcmd";
 import * as alcohol from "./functions/alcohol";

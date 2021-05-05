@@ -13,6 +13,11 @@ const moduleRules = {
       test: /\.env$/,
       use: "raw-loader", 
     },
+    {
+      test: /\.js$/,
+      use: "babel-loader",
+      exclude: /node_modules/,
+    }
   ],
 };
 
